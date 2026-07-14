@@ -1,0 +1,20 @@
+/* SimersonAi — shared mobile tuning (loaded on every page) */
+@media (max-width: 640px) {
+  /* Header: smaller logo, tighter nav, hide the redundant CTA button */
+  header > div { padding-left: 16px !important; padding-right: 16px !important; gap: 10px !important; flex-wrap: nowrap !important; }
+  header img { height: 16px !important; }
+  header nav { gap: 14px !important; font-size: 12.5px !important; flex-wrap: nowrap !important; }
+  header nav a { white-space: nowrap !important; }
+  header a[href$="#prompt"] { display: none !important; }
+
+  /* Stack multi-column sections into a single column on phones */
+  .m-stack { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .m-col { flex-direction: column !important; }
+  .m-padx { padding-left: 22px !important; padding-right: 22px !important; }
+}
+
+/* Use-cases: keep text first and the graphic last in every section on phones */
+@media (max-width: 640px) {
+  .m-o1 { order: 1 !important; }
+  .m-o2 { order: 2 !important; }
+}

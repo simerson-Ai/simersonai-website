@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz@0,6..72;1,6..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:#faf9f7;}
+  ::selection{background:rgba(168,132,47,0.2);}
+</style>
+<script src="image-slot.js"></script>
+<link rel="stylesheet" href="mobile.css">
+</helmet>
+<div ref="{{ root }}" style="--bg:#faf9f7;--ink:#15130f;--ink-soft:#6d685e;--gold:#a8842f;--gold-lite:#c6a35c;--line:#e7e2d8;font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden">
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(250,249,247,0.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)">
+    <div style="max-width:1200px;margin:0 auto;padding:17px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none">
+        <img src="assets/simerson-logo-color.svg" alt="SimersonAi" style="height:24px;width:auto;display:block">
+      </a>
+      <nav style="display:flex;align-items:center;gap:34px;font-size:15px;font-weight:500;color:var(--ink-soft)">
+        <a href="index.html#how" style="color:inherit;text-decoration:none" style-hover="color:var(--ink)">How it works</a>
+        <a href="use-cases.html" style="color:inherit;text-decoration:none" style-hover="color:var(--ink)">Use cases</a>
+        <a href="about.html" style="color:var(--ink);text-decoration:none;font-weight:600">About</a>
+      </nav>
+      <a href="index.html#prompt" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:11px 19px;border-radius:3px;text-decoration:none;border:1px solid var(--ink)" style-hover="background:#2c281f;border-color:#2c281f">Let's automate</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section data-screen-label="About Hero" style="position:relative;max-width:1100px;margin:0 auto;padding:96px 40px 60px;text-align:center;overflow:hidden">
+    <div style="position:absolute;top:-34%;left:50%;transform:translateX(-50%);width:680px;height:440px;background:radial-gradient(closest-side,rgba(198,163,92,0.14),transparent);filter:blur(20px);pointer-events:none"></div>
+    <div style="position:relative;z-index:2;max-width:780px;margin:0 auto">
+      <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:24px"><span style="width:18px;height:1px;background:var(--gold)"></span> About</div>
+      <h1 style="font-weight:700;font-size:clamp(38px,5.4vw,62px);line-height:1.03;letter-spacing:-0.025em;margin:0 0 22px">Software should do the busywork. <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)">People make the calls.</em></h1>
+      <p style="font-size:19px;line-height:1.55;color:var(--ink-soft);max-width:600px;margin:0 auto">SimersonAi builds custom AI agents that take the repetitive, time-draining work off your team's plate, so the people you hired can spend their hours where they matter.</p>
+    </div>
+  </section>
+
+  <!-- COMPANY STORY -->
+  <section data-screen-label="Company Story" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div style="max-width:1100px;margin:0 auto;padding:84px 40px">
+      <div class="m-stack" style="display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:start">
+        <div style="position:sticky;top:104px">
+          <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:18px"><span style="width:18px;height:1px;background:var(--gold)"></span> Why we exist</div>
+          <h2 style="font-weight:700;font-size:clamp(28px,3.4vw,40px);line-height:1.1;letter-spacing:-0.02em;margin:0">The work caught up to the technology.</h2>
+        </div>
+        <div>
+          <p style="font-size:18px;line-height:1.65;color:var(--ink);margin:0 0 22px">Every business runs on a layer of invisible, repetitive work, the follow-ups, the data entry, the scheduling, the status updates. It rarely gets automated because it's spread across tools, full of judgment calls, and never quite urgent enough to fix.</p>
+          <p style="font-size:18px;line-height:1.65;color:var(--ink-soft);margin:0 0 22px">SimersonAi exists to close that gap. We design AI agents around the way your business actually works, a clear trigger, the right inputs, supervised steps, and a human approval point before anything that matters goes out the door.</p>
+          <p style="font-size:18px;line-height:1.65;color:var(--ink-soft);margin:0">The result isn't a tool your team has to learn. It's work that simply happens, reliably, on the record, and under your control.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section data-screen-label="Founder" style="max-width:1100px;margin:0 auto;padding:90px 40px">
+    <div class="m-stack" style="display:grid;grid-template-columns:0.82fr 1.18fr;gap:60px;align-items:center">
+      <div>
+        <image-slot id="founder-photo" shape="rounded" radius="18" src="assets/bear-headshot.jpg" placeholder="Drop your photo here" style="width:100%;height:440px;display:block;border:1px solid var(--line);box-shadow:0 24px 54px -32px rgba(21,19,15,0.3)"></image-slot>
+      </div>
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:20px"><span style="width:18px;height:1px;background:var(--gold)"></span> The founder</div>
+        <blockquote style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;font-size:clamp(24px,2.8vw,33px);line-height:1.36;letter-spacing:-0.01em;margin:0 0 26px;color:var(--ink)">&ldquo;I spent years watching good teams stay late doing work a computer should have handled. I started SimersonAi to build exactly what I wished we'd had, and to build it for the people living inside that work.&rdquo;</blockquote>
+        <p style="font-size:17px;line-height:1.65;color:var(--ink-soft);margin:0 0 24px">SimersonAi was founded on a simple conviction: the most valuable automation isn't the flashiest. It's the quiet kind that gives people their time back. Every engagement starts the same way, by sitting with how your business really runs before a single line of an agent is built.</p>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:34px;height:1px;background:var(--gold)"></div>
+          <div>
+            <div style="font-size:16px;font-weight:600">Bear Simerson</div>
+            <div style="font-size:14px;color:var(--ink-soft)">Founder, SimersonAi &middot; Palm Desert, CA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section data-screen-label="Principles" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+    <div style="max-width:1200px;margin:0 auto;padding:84px 40px">
+      <div style="text-align:center;max-width:640px;margin:0 auto 52px">
+        <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:20px"><span style="width:18px;height:1px;background:var(--gold)"></span> How we work</div>
+        <h2 style="font-weight:700;font-size:clamp(28px,3.6vw,44px);line-height:1.08;letter-spacing:-0.02em;margin:0">Three things we don't compromise on.</h2>
+      </div>
+      <div class="m-stack" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
+        <div style="background:#faf9f7;border:1px solid var(--line);border-radius:16px;padding:32px 30px;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-5px);box-shadow:0 24px 50px -30px rgba(21,19,15,0.28);border-color:var(--gold)">
+          <div style="font-family:'Newsreader',serif;font-size:30px;color:var(--gold);margin-bottom:18px">01</div>
+          <div style="font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em">Built by an operator</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);margin:0">We've lived inside the workflows we automate. That means agents shaped around reality, not a whiteboard.</p>
+        </div>
+        <div style="background:#faf9f7;border:1px solid var(--line);border-radius:16px;padding:32px 30px;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-5px);box-shadow:0 24px 50px -30px rgba(21,19,15,0.28);border-color:var(--gold)">
+          <div style="font-family:'Newsreader',serif;font-size:30px;color:var(--gold);margin-bottom:18px">02</div>
+          <div style="font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em">Human in the loop</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);margin:0">Agents handle the volume; people keep the authority. Anything that needs judgment is routed for approval.</p>
+        </div>
+        <div style="background:#faf9f7;border:1px solid var(--line);border-radius:16px;padding:32px 30px;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-5px);box-shadow:0 24px 50px -30px rgba(21,19,15,0.28);border-color:var(--gold)">
+          <div style="font-family:'Newsreader',serif;font-size:30px;color:var(--gold);margin-bottom:18px">03</div>
+          <div style="font-size:19px;font-weight:700;margin-bottom:10px;letter-spacing:-0.01em">Start small, prove it</div>
+          <p style="font-size:15px;line-height:1.6;color:var(--ink-soft);margin:0">We begin with one high-leverage workflow and earn the next. Real results before bigger commitments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section data-screen-label="About CTA" style="position:relative;max-width:1200px;margin:0 auto;padding:104px 40px;text-align:center;overflow:hidden">
+    <div style="position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:680px;height:440px;background:radial-gradient(closest-side,rgba(198,163,92,0.14),transparent);filter:blur(20px);pointer-events:none"></div>
+    <div style="position:relative;z-index:2;max-width:680px;margin:0 auto;display:flex;flex-direction:column;align-items:center">
+      <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:22px"><span style="width:18px;height:1px;background:var(--gold)"></span> Work with us</div>
+      <h2 style="font-weight:700;font-size:clamp(32px,4.4vw,52px);line-height:1.04;letter-spacing:-0.025em;margin:0 0 18px">Let's find your <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)">first automation.</em></h2>
+      <p style="font-size:18px;line-height:1.55;color:var(--ink-soft);max-width:520px;margin:0 0 34px">Tell us the task you'd love to never do again. We'll map it, scope it, and show you exactly what we'd build, free.</p>
+      <a href="index.html#prompt" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;padding:15px 26px;border-radius:9px;text-decoration:none" style-hover="background:#2c281f">Describe your task <span style="color:var(--gold-lite)">&rarr;</span></a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#fff;border-top:1px solid var(--line)">
+    <div class="m-stack" style="max-width:1200px;margin:0 auto;padding:62px 40px 44px;display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:48px">
+      <div style="max-width:340px">
+        <img src="assets/simerson-logo-color.svg" alt="SimersonAi" style="height:24px;width:auto;display:block;margin-bottom:18px">
+        <p style="font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0">Custom AI automations for business, built for the repetitive work your team would rather not do.</p>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:7px;font-size:14px">
+          <a href="mailto:info@simersonai.com" style="color:var(--ink-soft);text-decoration:none" style-hover="color:var(--gold)">info@simersonai.com</a>
+          <a href="tel:+17604657500" style="color:var(--ink-soft);text-decoration:none" style-hover="color:var(--gold)">(760) 465-7500</a>
+          <span style="color:var(--ink-soft)">Palm Desert, California</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin-bottom:18px">Explore</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14.5px;color:var(--ink-soft)">
+          <a href="index.html#how" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">How it works</a>
+          <a href="use-cases.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Use cases</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin-bottom:18px">Company</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14.5px;color:var(--ink-soft)">
+          <a href="about.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">About</a>
+          <a href="index.html#prompt" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Get your game plan</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:22px 40px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ink-soft)">
+      <div>&copy; 2026 SimersonAi. All rights reserved.</div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap"><a href="privacy.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Privacy</a><a href="terms.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Terms</a><a href="compliance.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Compliance</a><a href="contact.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Contact</a></div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 900 },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#a8842f&quot;, &quot;options&quot;: [&quot;#a8842f&quot;, &quot;#b8923f&quot;, &quot;#8a6c28&quot;, &quot;#15130f&quot;], &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.rootRef = React.createRef();
+  }
+  componentDidMount() {
+    const root = this.rootRef.current;
+    if (root && this.props.accent) root.style.setProperty('--gold', this.props.accent);
+  }
+  renderVals() {
+    return { root: this.rootRef };
+  }
+}
+</script>
+</body>
+</html>

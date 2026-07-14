@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz@1,6..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* mobile tuning: stack the 3-column row into one column, ease side spacing on phones */
+@media (max-width:640px){.m-stack{grid-template-columns:1fr !important;gap:28px !important}.m-padx{padding-left:22px !important;padding-right:22px !important}.m-head{padding-left:18px !important;padding-right:18px !important;gap:12px !important}.m-nav{gap:15px !important;font-size:13px !important}.m-hide{display:none !important}.m-col{flex-direction:column !important}}
+  *{box-sizing:border-box;}
+  body{margin:0;background:#faf9f7;}
+  ::selection{background:rgba(168,132,47,0.2);}
+  textarea{font-family:inherit;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+  @keyframes glow{0%,100%{opacity:0.5;}50%{opacity:0.85;}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="mobile.css">
+</helmet>
+<div ref="{{ root }}" style="--bg:#faf9f7;--ink:#15130f;--ink-soft:#6d685e;--gold:#a8842f;--gold-lite:#c6a35c;--line:#e7e2d8;font-family:'Hanken Grotesk',sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;overflow-x:hidden">
+
+  <!-- Netlify form detection (static + hidden; Netlify scans these at deploy) -->
+  <form name="automation-brief" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+    <input type="hidden" name="form-name" value="automation-brief" />
+    <input type="text" name="bot-field" />
+    <textarea name="brief"></textarea>
+    <input type="text" name="business_type" />
+    <input type="text" name="role" />
+    <input type="text" name="hours" />
+    <input type="text" name="timeline" />
+    <input type="email" name="email" />
+  </form>
+
+  <!-- Netlify detection form for the contact form (so submissions are captured) -->
+  <form name="contact" data-netlify="true" netlify-honeypot="bot-field" style="display:none">
+    <input type="hidden" name="form-name" value="contact" />
+    <input type="text" name="bot-field" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <!-- NAV -->
+  <header style="position:sticky;top:0;z-index:50;background:rgba(250,249,247,0.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)">
+    <div class="m-head" style="max-width:1200px;margin:0 auto;padding:17px 40px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <a href="#top" style="display:flex;align-items:center;text-decoration:none">
+        <img src="assets/simerson-logo-color.svg" alt="SimersonAi" style="height:24px;width:auto;display:block">
+      </a>
+      <nav class="m-nav" style="display:flex;align-items:center;gap:34px;font-size:15px;font-weight:500;color:var(--ink-soft)">
+        <a href="#how" style="color:inherit;text-decoration:none" style-hover="color:var(--ink)">How it works</a>
+        <a href="use-cases.html" style="color:inherit;text-decoration:none" style-hover="color:var(--ink)">Use cases</a>
+        <a href="about.html" style="color:inherit;text-decoration:none" style-hover="color:var(--ink)">About</a>
+      </nav>
+      <a href="#prompt" class="m-hide" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:11px 19px;border-radius:3px;text-decoration:none;border:1px solid var(--ink)" style-hover="background:#2c281f;border-color:#2c281f">Let's automate</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section data-screen-label="Hero" class="m-padx" style="position:relative;min-height:calc(100vh - 67px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:64px 40px 80px;overflow:hidden">
+
+    <!-- dot grid backdrop -->
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(21,19,15,0.06) 1px,transparent 1px);background-size:26px 26px;-webkit-mask-image:radial-gradient(60% 55% at 50% 42%,#000 0%,transparent 78%);mask-image:radial-gradient(60% 55% at 50% 42%,#000 0%,transparent 78%);pointer-events:none"></div>
+    <!-- warm glow -->
+    <div style="position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:760px;height:520px;background:radial-gradient(closest-side,rgba(198,163,92,0.18),transparent);filter:blur(20px);animation:glow 7s ease-in-out infinite;pointer-events:none"></div>
+
+    <div style="position:relative;z-index:2;width:100%;max-width:760px;display:flex;flex-direction:column;align-items:center;text-align:center">
+
+      <h1 style="font-weight:700;font-size:clamp(40px,6vw,68px);line-height:1.03;letter-spacing:-0.025em;margin:0 0 20px">
+        What should we automate <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)">for you?</em>
+      </h1>
+
+      <p style="font-size:19px;line-height:1.55;color:var(--ink-soft);max-width:520px;margin:0 0 38px">
+        Describe the task you'd love to never do again. We'll design the AI automation that handles it from start to finish.
+      </p>
+
+      <!-- PROMPT WINDOW -->
+      <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <div id="prompt" style="width:100%;max-width:680px">
+        <div style="background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 70px -34px rgba(21,19,15,0.32),0 2px 6px rgba(21,19,15,0.04);overflow:hidden;text-align:left">
+          <!-- card header -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:9px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.04em;color:var(--ink-soft)">
+              <span style="width:7px;height:7px;border-radius:50%;background:var(--gold)"></span> what should we build?
+            </div>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);opacity:0.7">no signup needed</span>
+          </div>
+          <!-- textarea + overlay -->
+          <div style="position:relative;padding:22px 22px 8px">
+            <textarea ref="{{ box }}" onInput="{{ onInput }}" rows="3" style="width:100%;border:none;outline:none;resize:none;background:transparent;font-size:19px;line-height:1.5;color:var(--ink);font-weight:500;min-height:84px"></textarea>
+            <div ref="{{ overlay }}" style="position:absolute;top:22px;left:22px;right:22px;font-size:19px;line-height:1.5;color:#9a948a;font-weight:500;pointer-events:none"><span ref="{{ overlayText }}"></span><span style="display:inline-block;width:2px;height:20px;background:var(--gold);vertical-align:-3px;margin-left:1px;animation:blink 1.1s step-end infinite"></span></div>
+          </div>
+          <div style="padding:0 22px 6px;font-size:12px;color:#9a948a;line-height:1.4">Please don't include patient names or any confidential health information.</div>
+          <!-- card footer -->
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 18px 16px;gap:12px">
+            <div style="font-size:13px;color:var(--ink-soft)">Pick an example, or write your own</div>
+            <button onClick="{{ submit }}" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--gold);font-family:inherit;font-size:15px;font-weight:600;padding:11px 20px;border:none;border-radius:9px;cursor:pointer" style-hover="background:#2c281f">Automate this <span>&rarr;</span></button>
+          </div>
+        </div>
+
+        <!-- example chips -->
+        <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:20px">
+          <sc-for list="{{ chips }}" as="chip" hint-placeholder-count="5">
+            <button onClick="{{ chip.pick }}" style="background:#fff;border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:14px;font-weight:500;padding:9px 15px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:7px" style-hover="border-color:var(--gold);color:var(--gold)">
+              <span style="color:var(--gold);font-size:13px">+</span> {{ chip.label }}
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- CONFIRMATION -->
+      <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div style="width:100%;max-width:680px;text-align:left">
+        <div style="background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 70px -34px rgba(21,19,15,0.32);overflow:hidden">
+          <div style="padding:26px 26px 22px;border-bottom:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:11px;margin-bottom:16px">
+              <span style="width:26px;height:26px;border-radius:50%;background:var(--gold);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:15px">&#10003;</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.06em;text-transform:uppercase;color:var(--gold)">Brief received</span>
+            </div>
+            <div style="font-size:13px;color:var(--ink-soft);margin-bottom:7px">You want to automate</div>
+            <div style="font-size:19px;font-weight:600;line-height:1.4;color:var(--ink)">&ldquo;{{ value }}&rdquo;</div>
+          </div>
+          <!-- mini flow graphic -->
+          <div style="padding:24px 26px;background:#fcfbf9">
+            <div style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">Here's how we'd build it</div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="flex:1;text-align:center"><div style="width:38px;height:38px;margin:0 auto 9px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">1</div><div style="font-size:13px;font-weight:600">Map</div><div style="font-size:11px;color:var(--ink-soft)">free audit</div></div>
+              <div style="flex:0.6;height:1px;background:var(--line)"></div>
+              <div style="flex:1;text-align:center"><div style="width:38px;height:38px;margin:0 auto 9px;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">2</div><div style="font-size:13px;font-weight:600">Build</div><div style="font-size:11px;color:var(--ink-soft)">custom agent</div></div>
+              <div style="flex:0.6;height:1px;background:var(--line)"></div>
+              <div style="flex:1;text-align:center"><div style="width:38px;height:38px;margin:0 auto 9px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">3</div><div style="font-size:13px;font-weight:600">Automate</div><div style="font-size:11px;color:var(--ink-soft)">it runs itself</div></div>
+            </div>
+          </div>
+          <div style="padding:24px 26px;border-top:1px solid var(--line)">
+            <sc-if value="{{ phaseContact }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="font-size:15px;font-weight:600;margin-bottom:5px">Where should we send your game plan?</div>
+              <div style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">A few quick details so we can build your custom plan and email you a copy.</div>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <input ref="{{ gName }}" type="text" placeholder="Your name" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;background:#fff" style-focus="border-color:var(--gold)" />
+                <input ref="{{ gCompany }}" type="text" placeholder="Company name" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;background:#fff" style-focus="border-color:var(--gold)" />
+                <input ref="{{ gEmail }}" type="email" placeholder="you@company.com" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;background:#fff" style-focus="border-color:var(--gold)" />
+                <input ref="{{ gPhone }}" type="tel" placeholder="Phone number" style="width:100%;border:1px solid var(--line);border-radius:9px;padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);outline:none;background:#fff" style-focus="border-color:var(--gold)" />
+              </div>
+              <div ref="{{ gErr }}" style="display:none;font-size:12px;color:#b4453a;margin-top:9px">Please enter your name and a valid email address.</div>
+              <button onClick="{{ submitGate }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:14px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;padding:13px 20px;border:none;border-radius:9px;cursor:pointer" style-hover="background:#2c281f">Build my game plan <span style="color:var(--gold-lite)">&rarr;</span></button>
+              <div style="font-size:12px;color:var(--ink-soft);margin-top:11px;text-align:center">No spam &middot; we use this only to send your plan and follow up about building it.</div>
+            </div>
+            </sc-if>
+            <sc-if value="{{ phaseBuilding }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:14px 0 6px">
+              <div ref="{{ spinner }}" style="width:34px;height:34px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--gold);margin:0 auto 16px"></div>
+              <div style="font-size:15px;font-weight:600">Designing your solution<span ref="{{ dots }}"></span></div>
+              <div style="font-size:13px;color:var(--ink-soft);margin-top:6px">Turning your task into an agent blueprint.</div>
+            </div>
+            </sc-if>
+            <sc-if value="{{ phaseSolution }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px">Starter blueprint</div>
+              <div style="font-size:19px;font-weight:700;letter-spacing:-0.01em;margin-bottom:8px">{{ solTitle }}</div>
+              <div style="font-size:14px;line-height:1.6;color:var(--ink-soft);margin-bottom:18px">{{ solSummary }}</div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:18px">
+                <div style="flex:1;min-width:150px;background:#fcfbf9;border:1px solid var(--line);border-radius:11px;padding:13px 15px">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">The benefit</div>
+                  <div style="font-size:13px;line-height:1.5;color:var(--ink)">{{ solBenefit }}</div>
+                </div>
+                <div style="flex:1;min-width:150px;background:#fcfbf9;border:1px solid var(--line);border-radius:11px;padding:13px 15px">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px">Timeline</div>
+                  <div style="font-size:13px;line-height:1.5;color:var(--ink)">{{ solTimeline }}</div>
+                </div>
+              </div>
+              <sc-if value="{{ hasSteps }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+                <sc-for list="{{ solSteps }}" as="step" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:flex-start;gap:12px">
+                    <div style="flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px">{{ step.n }}</div>
+                    <div style="font-size:14px;line-height:1.5;color:var(--ink)"><strong style="font-weight:700;color:var(--gold)">{{ step.title }}</strong> {{ step.body }}</div>
+                  </div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <sc-if value="{{ hasQuestions }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fcfbf9;border:1px solid var(--line);border-radius:11px;padding:16px 18px;margin-bottom:20px">
+                <div style="font-size:13px;font-weight:600;margin-bottom:8px">A couple things we'd confirm with you:</div>
+                <sc-for list="{{ solQuestions }}" as="q" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:flex-start;gap:9px;font-size:13px;line-height:1.5;color:var(--ink-soft);margin-top:6px"><span style="color:var(--gold);margin-top:1px">&bull;</span> {{ q }}</div>
+                </sc-for>
+              </div>
+              </sc-if>
+              <div style="border-top:1px solid var(--line);padding-top:20px">
+                <div style="font-size:15px;color:var(--ink);font-weight:700;margin-bottom:5px">Ready to build this?</div>
+                <div style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">We just emailed a copy of this game plan to <span ref="{{ emailEcho }}" style="color:var(--ink);font-weight:600"></span>. The next step is a quick call to scope the build, no pressure, no obligation.</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                  <a href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;padding:13px 22px;border-radius:9px;text-decoration:none" style-hover="background:#2c281f">Book a call to start the build <span style="color:var(--gold-lite)">&rarr;</span></a>
+                </div>
+                <div style="margin-top:15px"><button onClick="{{ reset }}" style="background:none;border:none;color:var(--ink-soft);font-family:inherit;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px">Start over</button></div>
+              </div>
+            </div>
+            </sc-if>
+            <sc-if value="{{ phaseDone }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;padding:8px 0 4px">
+              <div style="width:42px;height:42px;border-radius:50%;background:var(--gold);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:14px">&#10003;</div>
+              <div style="font-size:19px;font-weight:700;margin-bottom:7px">Your game plan is on its way.</div>
+              <div style="font-size:14px;line-height:1.55;color:var(--ink-soft)">It's downloading now, and we'll follow up at <span ref="{{ emailEcho }}" style="color:var(--ink);font-weight:600"></span> within one business day.</div>
+              <a href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:18px;background:var(--ink);color:#fff;font-size:14.5px;font-weight:600;padding:12px 22px;border-radius:9px;text-decoration:none" style-hover="background:#2c281f">Book your free 15-minute assessment <span style="color:var(--gold-lite)">&rarr;</span></a>
+            </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+
+      <div style="margin-top:34px;font-size:13px;color:var(--ink-soft);display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center">
+        <span>Trusted by operators who'd rather build than babysit spreadsheets</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO MARQUEE -->
+  <!-- HOW IT WORKS -->
+  <section id="how" data-screen-label="How it works" style="max-width:1200px;margin:0 auto;padding:108px 40px">
+    <div style="text-align:center;max-width:700px;margin:0 auto 60px">
+      <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:22px"><span style="width:18px;height:1px;background:var(--gold)"></span> How it works</div>
+      <h2 style="font-weight:700;font-size:clamp(32px,4.4vw,50px);line-height:1.06;letter-spacing:-0.02em;margin:0 0 16px">From your words to a <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)">working agent.</em></h2>
+      <p style="font-size:18px;line-height:1.55;color:var(--ink-soft);margin:0">You describe the task once. We handle the mapping, the building, and the monitoring, and hand you something that just runs.</p>
+    </div>
+
+    <div ref="{{ howRow }}" class="m-col" style="display:flex;align-items:stretch;gap:0">
+      <!-- step 1 -->
+      <div onMouseEnter="{{ h1on }}" onMouseLeave="{{ h1off }}" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(21,19,15,0.35);border-color:var(--gold)">
+        <div style="height:134px;background:#fcfbf9;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:18px">
+          <div style="width:144px;background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px;box-shadow:0 10px 22px -14px rgba(21,19,15,0.3)">
+            <div style="height:7px;width:85%;background:#e6e1d6;border-radius:4px;margin-bottom:8px"></div>
+            <div style="display:flex;align-items:center;gap:5px"><div ref="{{ s1bar }}" style="height:7px;width:30%;background:#e6e1d6;border-radius:4px;transition:width 0.6s ease"></div><div style="width:2px;height:13px;background:var(--gold)"></div></div>
+          </div>
+        </div>
+        <div style="padding:22px 22px 26px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px">01</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:9px;letter-spacing:-0.01em">You describe the task</div>
+          <p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin:0">In plain English, no flowcharts, no tech spec. Just tell us what you'd love to stop doing.</p>
+        </div>
+      </div>
+      <div style="flex:0 0 36px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px">&rarr;</div>
+      <!-- step 2 -->
+      <div onMouseEnter="{{ h2on }}" onMouseLeave="{{ h2off }}" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(21,19,15,0.35);border-color:var(--gold)">
+        <div style="height:134px;background:#fcfbf9;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:18px">
+          <div style="position:relative;display:flex;align-items:center">
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--ink)"></div>
+            <div style="width:30px;height:2px;background:var(--line)"></div>
+            <div style="width:20px;height:20px;border-radius:50%;background:var(--gold)"></div>
+            <div style="width:30px;height:2px;background:var(--line)"></div>
+            <div style="width:20px;height:20px;border-radius:50%;border:2px solid var(--ink);background:#fff;box-sizing:border-box"></div>
+            <div ref="{{ s2dot }}" style="position:absolute;left:4px;top:50%;width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 5px rgba(168,132,47,0.16);transform:translate(0,-50%);opacity:0;transition:transform 0.7s cubic-bezier(.5,0,.2,1),opacity 0.3s ease"></div>
+          </div>
+        </div>
+        <div style="padding:22px 22px 26px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px">02</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:9px;letter-spacing:-0.01em">We map your workflow</div>
+          <p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin:0">In a free audit we trace every step, input, and decision, then pick the highest-leverage place to start.</p>
+        </div>
+      </div>
+      <div style="flex:0 0 36px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px">&rarr;</div>
+      <!-- step 3 -->
+      <div onMouseEnter="{{ h3on }}" onMouseLeave="{{ h3off }}" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(21,19,15,0.35);border-color:var(--gold)">
+        <div style="height:134px;background:#fcfbf9;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:18px">
+          <div ref="{{ s3blocks }}" style="display:grid;grid-template-columns:repeat(2,1fr);gap:7px">
+            <div style="width:30px;height:30px;border-radius:7px;background:var(--ink);transition:transform 0.4s cubic-bezier(.5,0,.2,1)"></div>
+            <div style="width:30px;height:30px;border-radius:7px;background:var(--gold);transition:transform 0.4s cubic-bezier(.5,0,.2,1)"></div>
+            <div style="width:30px;height:30px;border-radius:7px;background:#e6e1d6;transition:transform 0.4s cubic-bezier(.5,0,.2,1)"></div>
+            <div style="width:30px;height:30px;border-radius:7px;background:var(--ink);transition:transform 0.4s cubic-bezier(.5,0,.2,1)"></div>
+          </div>
+        </div>
+        <div style="padding:22px 22px 26px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px">03</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:9px;letter-spacing:-0.01em">We build your agent</div>
+          <p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin:0">A custom AI agent wired into your tools, with human approval gates and a full audit trail built in.</p>
+        </div>
+      </div>
+      <div style="flex:0 0 36px;display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:20px">&rarr;</div>
+      <!-- step 4 -->
+      <div onMouseEnter="{{ h4on }}" onMouseLeave="{{ h4off }}" style="flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:transform 0.35s ease,box-shadow 0.35s ease,border-color 0.35s ease" style-hover="transform:translateY(-6px);box-shadow:0 24px 50px -28px rgba(21,19,15,0.35);border-color:var(--gold)">
+        <div style="height:134px;background:#fcfbf9;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:center;padding:18px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:11px">
+            <div ref="{{ s4track }}" style="width:66px;height:34px;border-radius:999px;background:rgba(21,19,15,0.14);display:flex;align-items:center;padding:4px;transition:background 0.4s ease"><div ref="{{ s4knob }}" style="width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.25);transform:translateX(0);transition:transform 0.4s cubic-bezier(.5,0,.2,1)"></div></div>
+            <div ref="{{ s4label }}" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.14em;color:var(--ink-soft);transition:color 0.3s ease">READY</div>
+          </div>
+        </div>
+        <div style="padding:22px 22px 26px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);letter-spacing:0.1em;margin-bottom:12px">04</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:9px;letter-spacing:-0.01em">It runs on autopilot</div>
+          <p style="font-size:14px;line-height:1.55;color:var(--ink-soft);margin:0">The work happens on its own. You get the time back, the records stay clean, and you stay in control.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px">
+      <a href="#prompt" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--gold);font-size:15px;font-weight:600;padding:14px 24px;border-radius:9px;text-decoration:none" style-hover="background:#2c281f">See it on your workflow <span>&rarr;</span></a>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA -->
+  <section id="contact" data-screen-label="Get started" style="position:relative;border-top:1px solid var(--line);padding:112px 40px;text-align:center;overflow:hidden">
+    <div style="position:absolute;top:-40%;left:50%;transform:translateX(-50%);width:720px;height:520px;background:radial-gradient(closest-side,rgba(198,163,92,0.16),transparent);filter:blur(20px);pointer-events:none"></div>
+    <div style="position:relative;z-index:2;max-width:720px;margin:0 auto;display:flex;flex-direction:column;align-items:center">
+      <div style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:24px"><span style="width:18px;height:1px;background:var(--gold)"></span> Get started</div>
+      <h2 style="font-weight:700;font-size:clamp(36px,5vw,60px);line-height:1.02;letter-spacing:-0.025em;margin:0 0 20px">Tell us what to automate <em style="font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)">first.</em></h2>
+      <p style="font-size:19px;line-height:1.55;color:var(--ink-soft);max-width:520px;margin:0 0 36px">Tell us the task you'd love to never do again, and we'll show you exactly what we'd build, no commitment.</p>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center">
+        <a href="#prompt" style="display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;padding:15px 26px;border-radius:9px;text-decoration:none" style-hover="background:#2c281f">Get your game plan <span style="color:var(--gold-lite)">&rarr;</span></a>
+        <a href="#how" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;padding:15px 26px;border-radius:9px;text-decoration:none;border:1px solid var(--line)" style-hover="border-color:var(--gold)">See how it works</a>
+      </div>
+      <div style="margin-top:26px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.04em;color:var(--ink-soft);opacity:0.8">takes 2 minutes &nbsp;&middot;&nbsp; no pitch deck &nbsp;&middot;&nbsp; no pressure</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="background:#fff;border-top:1px solid var(--line)">
+    <div class="m-stack m-padx" style="max-width:1200px;margin:0 auto;padding:62px 40px 44px;display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:48px">
+      <div style="max-width:340px">
+        <img src="assets/simerson-logo-color.svg" alt="SimersonAi" style="height:24px;width:auto;display:block;margin-bottom:18px">
+        <p style="font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0">Custom AI automations for business, built for the repetitive work your team would rather not do.</p>
+        <div style="margin-top:18px;display:flex;flex-direction:column;gap:7px;font-size:14px">
+          <a href="mailto:info@simersonai.com" style="color:var(--ink-soft);text-decoration:none" style-hover="color:var(--gold)">info@simersonai.com</a>
+          <a href="tel:+17604657500" style="color:var(--ink-soft);text-decoration:none" style-hover="color:var(--gold)">(760) 465-7500</a>
+          <span style="color:var(--ink-soft)">Palm Desert, California</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin-bottom:18px">Explore</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14.5px;color:var(--ink-soft)">
+          <a href="#how" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">How it works</a>
+          <a href="#prompt" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Start a brief</a>
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin-bottom:18px">Company</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:14.5px;color:var(--ink-soft)">
+          <a href="about.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">About</a>
+          <a href="#prompt" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Get your game plan</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:0 auto;padding:22px 40px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--ink-soft)">
+      <div>&copy; 2026 SimersonAi. All rights reserved.</div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap"><a href="privacy.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Privacy</a><a href="terms.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Terms</a><a href="compliance.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Compliance</a><a href="contact.html" style="color:inherit;text-decoration:none" style-hover="color:var(--gold)">Contact</a></div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1280, &quot;height&quot;: 860 },
+  &quot;accent&quot;: { &quot;editor&quot;: &quot;color&quot;, &quot;default&quot;: &quot;#a8842f&quot;, &quot;options&quot;: [&quot;#a8842f&quot;, &quot;#b8923f&quot;, &quot;#8a6c28&quot;, &quot;#15130f&quot;], &quot;tsType&quot;: &quot;string&quot; }
+}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.boxRef = React.createRef();
+    this.gNameRef = React.createRef();
+    this.gCompanyRef = React.createRef();
+    this.gEmailRef = React.createRef();
+    this.gPhoneRef = React.createRef();
+    this.gErrRef = React.createRef();
+    this.rootRef = React.createRef();
+    this.overlayRef = React.createRef();
+    this.overlayTextRef = React.createRef();
+    this.marqueeRef = React.createRef();
+    this.howRowRef = React.createRef();
+    this.s1barRef = React.createRef();
+    this.s2dotRef = React.createRef();
+    this.s3blocksRef = React.createRef();
+    this.s4trackRef = React.createRef();
+    this.s4knobRef = React.createRef();
+    this.s4labelRef = React.createRef();
+    this.resultsRef = React.createRef();
+    this.barManualRef = React.createRef();
+    this.barAutoRef = React.createRef();
+    this.stat1Ref = React.createRef();
+    this.stat2Ref = React.createRef();
+    this.stat3Ref = React.createRef();
+    this.emailRef = React.createRef();
+    this.emailErrRef = React.createRef();
+    this.emailEchoRef = React.createRef();
+    this.cNameRef = React.createRef();
+    this.cEmailRef = React.createRef();
+    this.cMsgRef = React.createRef();
+    this.cErrRef = React.createRef();
+    this.dotsRef = React.createRef();
+    this.spinnerRef = React.createRef();
+    this._ci = 0; this._chi = 0; this._del = false;
+    this.examples = [
+      "Qualify inbound leads and book them straight onto my calendar…",
+      "Pull invoices from email and reconcile them in QuickBooks…",
+      "Draft replies to support tickets and tag them by urgency…",
+      "Turn meeting notes into CRM updates and follow-up tasks…",
+      "Generate a weekly KPI report and send it to the team…",
+    ];
+    this.chipData = [
+      { label: "Lead follow-up", text: "Follow up with every new lead within 5 minutes and book the warm ones onto my calendar." },
+      { label: "Invoice processing", text: "Read incoming invoices from email, extract the line items, and enter them into our accounting system." },
+      { label: "Support triage", text: "Read new support tickets, draft a reply, and tag each one by urgency and topic." },
+      { label: "Report generation", text: "Pull our key numbers every Monday and send a clean KPI summary to the team." },
+      { label: "Onboarding", text: "Walk every new client through onboarding, collect their docs, set up accounts, and send next steps." },
+    ];
+    this.clientLogos = [
+      { src: "assets/logos/caring-hearts.png", alt: "Caring Hearts Premier Home Care" },
+      { src: "assets/logos/rizzo.webp", alt: "Rizzo Strategic Solutions" },
+      { src: "assets/logos/amazing-health.png", alt: "Amazing Health Home Care" },
+    ];
+    this.state = { submitted: false, value: "", phase: 'questions', answers: { business_type: null, role: null, hours: null, timeline: null }, contact: { name: '', company: '', email: '', phone: '' }, solution: null, contactSent: false };
+  }
+  componentDidMount() {
+    if (this.props.accent && this.rootRef.current) this.rootRef.current.style.setProperty('--gold', this.props.accent);
+    this.tick();
+    this.loadLogo();
+    this._triggers = [
+      { ref: this.howRowRef, fired: false, run: () => this.runSteps() },
+      { ref: this.resultsRef, fired: false, run: () => this.runOutcomes() },
+    ];
+    this._onScroll = () => this.checkTriggers();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    this.checkTriggers();
+    this._st = setTimeout(this._onScroll, 350);
+  }
+  checkTriggers() {
+    if (!this._triggers) { return; }
+    const vh = window.innerHeight || 800;
+    this._triggers.forEach(t => {
+      if (t.fired) { return; }
+      const el = t.ref.current;
+      if (!el) { return; }
+      const r = el.getBoundingClientRect();
+      if (r.top < vh * 0.82 && r.bottom > 0) { t.fired = true; t.run(); }
+    });
+  }
+  runSteps() {
+    [1, 2, 3, 4].forEach(i => { setTimeout(() => { this.hover(i, true); setTimeout(() => this.hover(i, false), 1000); }, i * 230); });
+  }
+  runOutcomes() {
+    if (this.barManualRef.current) this.barManualRef.current.style.width = '100%';
+    setTimeout(() => { if (this.barAutoRef.current) this.barAutoRef.current.style.width = '14%'; }, 280);
+    this.countUp(this.stat1Ref.current, 20, 1200);
+    this.countUp(this.stat2Ref.current, 40, 1200);
+    this.countUp(this.stat3Ref.current, 100, 1500);
+  }
+  countUp(el, target, duration) {
+    if (!el) { return; }
+    const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target);
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  hover = (i, on) => {
+    if (i === 1) { const b = this.s1barRef.current; if (b) b.style.width = on ? '85%' : '30%'; }
+    else if (i === 2) { const d = this.s2dotRef.current; if (d) { d.style.opacity = on ? '1' : '0'; d.style.transform = on ? 'translate(100px,-50%)' : 'translate(0,-50%)'; } }
+    else if (i === 3) { const c = this.s3blocksRef.current; if (c) { [].forEach.call(c.children, (ch, k) => { ch.style.transitionDelay = (k * 70) + 'ms'; ch.style.transform = on ? (k === 1 ? 'scale(1.18) rotate(90deg)' : 'scale(1.14)') : 'scale(1) rotate(0deg)'; }); } }
+    else if (i === 4) { const t = this.s4trackRef.current, k = this.s4knobRef.current, l = this.s4labelRef.current; if (t) t.style.background = on ? 'var(--gold)' : 'rgba(21,19,15,0.14)'; if (k) k.style.transform = on ? 'translateX(32px)' : 'translateX(0)'; if (l) { l.style.color = on ? 'var(--gold)' : 'var(--ink-soft)'; l.textContent = on ? 'RUNNING' : 'READY'; } }
+  };
+  componentWillUnmount() { clearTimeout(this._t); clearTimeout(this._st); cancelAnimationFrame(this._raf); clearInterval(this._dotsInt); cancelAnimationFrame(this._spinRaf); if (this._onScroll) { window.removeEventListener('scroll', this._onScroll); window.removeEventListener('resize', this._onScroll); } }
+  startMarquee() {
+    const track = this.marqueeRef.current;
+    if (!track) { return; }
+    const imgs = [].slice.call(track.querySelectorAll('img'));
+    Promise.all(imgs.map(im => im.complete ? Promise.resolve() : new Promise(r => { im.onload = im.onerror = r; }))).then(() => this.runMarquee());
+  }
+  runMarquee() {
+    const track = this.marqueeRef.current;
+    if (!track) { return; }
+    this._half = track.scrollWidth / 2;
+    this._pos = -this._half;
+    let last = performance.now();
+    const speed = 42;
+    const step = (now) => {
+      const dt = Math.min((now - last) / 1000, 0.05); last = now;
+      this._pos += speed * dt;
+      if (this._pos >= 0) { this._pos -= this._half; }
+      track.style.transform = 'translateX(' + this._pos + 'px)';
+      this._raf = requestAnimationFrame(step);
+    };
+    this._raf = requestAnimationFrame(step);
+  }
+  syncOverlay() {
+    const box = this.boxRef.current, ov = this.overlayRef.current;
+    if (ov && box) ov.style.display = box.value ? 'none' : 'block';
+  }
+  onInput = () => { this.syncOverlay(); };
+  tick() {
+    const box = this.boxRef.current, t = this.overlayTextRef.current, ov = this.overlayRef.current;
+    if (this.state.submitted || !box || !t) { this._t = setTimeout(() => this.tick(), 300); return; }
+    if (box.value !== "") { if (ov) ov.style.display = 'none'; this._t = setTimeout(() => this.tick(), 300); return; }
+    if (ov) ov.style.display = 'block';
+    const full = this.examples[this._ci % this.examples.length];
+    if (!this._del) {
+      this._chi++;
+      if (this._chi > full.length) { t.textContent = full; this._del = true; this._t = setTimeout(() => this.tick(), 1700); return; }
+    } else {
+      this._chi--;
+      if (this._chi <= 0) { this._chi = 0; this._del = false; this._ci++; t.textContent = ""; this._t = setTimeout(() => this.tick(), 240); return; }
+    }
+    t.textContent = full.slice(0, this._chi);
+    this._t = setTimeout(() => this.tick(), this._del ? 26 : 46);
+  }
+  pick = (text) => {
+    const box = this.boxRef.current;
+    if (box) { box.value = text; box.focus(); }
+    this.syncOverlay();
+  };
+  submit = () => {
+    const box = this.boxRef.current;
+    const v = box ? box.value.trim() : "";
+    if (v) { this.setState({ submitted: true, value: box.value, phase: 'contact', solution: null, contactSent: false }); }
+  };
+  reset = () => {
+    const keep = this.state.value;
+    this.setState({ submitted: false, phase: 'questions', answers: { business_type: null, role: null, hours: null, timeline: null }, solution: null }, () => {
+      const box = this.boxRef.current;
+      if (box) { box.value = keep; box.focus(); }
+      this.syncOverlay();
+    });
+  };
+  submitGate = () => {
+    var name = this.gNameRef.current ? this.gNameRef.current.value.trim() : '';
+    var company = this.gCompanyRef.current ? this.gCompanyRef.current.value.trim() : '';
+    var email = this.gEmailRef.current ? this.gEmailRef.current.value.trim() : '';
+    var phone = this.gPhoneRef.current ? this.gPhoneRef.current.value.trim() : '';
+    var ok = name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+    if (!ok) { if (this.gErrRef.current) this.gErrRef.current.style.display = 'block'; return; }
+    if (this.gErrRef.current) this.gErrRef.current.style.display = 'none';
+    this.setState({ contact: { name: name, company: company, email: email, phone: phone }, phase: 'building', solution: null, contactSent: false }, () => { this.startDots(); this.spin(); this.runGenerate(); });
+  };
+  finishLead() {
+    if (this.state.contactSent) { return; }
+    this.setState({ contactSent: true });
+    var c = this.state.contact || {};
+    try { this.downloadPDF(true); } catch (e) {}
+    var lead = { name: c.name || '', company: c.company || '', email: c.email || '', phone: c.phone || '', brief: this.state.value };
+    this.postNetlify('automation-brief', { name: lead.name, company: lead.company, email: lead.email, phone: lead.phone, brief: lead.brief });
+    this.emailLead(lead);
+    this.logLead(lead);
+    if (this.emailEchoRef.current) this.emailEchoRef.current.textContent = c.email || '';
+  }
+  postNetlify(formName, data) {
+    try {
+      const params = new URLSearchParams();
+      params.append('form-name', formName);
+      params.append('bot-field', '');
+      Object.keys(data).forEach(function(k){ params.append(k, data[k] == null ? '' : data[k]); });
+      return fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: params.toString() }).catch(function(){});
+    } catch (e) { return Promise.resolve(); }
+  }
+  emailLead(data) {
+    try {
+      var s = this.state.solution || {};
+      var payload = {
+        _subject: 'New SimersonAi lead: ' + (data.name || data.email || ''),
+        _template: 'table',
+        _captcha: 'false',
+        Name: data.name || '',
+        Company: data.company || '',
+        Email: data.email || '',
+        Phone: data.phone || '',
+        'Wants to automate': data.brief || '',
+        'Plan name': s.title || '',
+        'Plan summary': s.summary || '',
+        'Estimated payoff': s.benefit || '',
+        'Estimated build time': s.timeline || ''
+      };
+      (Array.isArray(s.steps) ? s.steps : []).slice(0, 6).forEach(function (t, i) { payload['Step ' + (i + 1)] = String(t); });
+      (Array.isArray(s.questions) ? s.questions : []).slice(0, 3).forEach(function (t, i) { payload['To confirm ' + (i + 1)] = String(t); });
+      return fetch('https://formsubmit.co/ajax/bsimerson@simersonai.com', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      }).catch(function(){});
+    } catch (e) { return Promise.resolve(); }
+  }
+  logLead(data) {
+    try {
+      var s = this.state.solution || {};
+      var payload = {
+        name: data.name || '',
+        company: data.company || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        brief: data.brief || '',
+        plan_title: s.title || '',
+        plan_summary: s.summary || '',
+        plan_benefit: s.benefit || '',
+        plan_timeline: s.timeline || '',
+        pdf_base64: this._lastPdfB64 || ''
+      };
+      return fetch('/.netlify/functions/log-lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }).catch(function(){});
+    } catch (e) { return Promise.resolve(); }
+  }
+  submitContact = () => {
+    const name = this.cNameRef.current ? this.cNameRef.current.value.trim() : '';
+    const email = this.cEmailRef.current ? this.cEmailRef.current.value.trim() : '';
+    const msg = this.cMsgRef.current ? this.cMsgRef.current.value.trim() : '';
+    const ok = name && /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email) && msg;
+    if (!ok) { if (this.cErrRef.current) this.cErrRef.current.style.display = 'block'; return; }
+    if (this.cErrRef.current) this.cErrRef.current.style.display = 'none';
+    this.postNetlify('contact', { name: name, email: email, message: msg });
+    this.setState({ contactSent: true });
+  };
+  emailKey = (e) => { if (e.key === 'Enter') { e.preventDefault(); this.submitEmail(); } };
+  generate = () => {
+    this.setState({ phase: 'building', solution: null }, () => { this.startDots(); this.spin(); this.runGenerate(); });
+  };
+  async runGenerate() {
+    const a = this.state.answers;
+    const prompt = 'You are an AI automation consultant for SimersonAi. A business owner wants to automate a task. Produce a concise, realistic starter CONCEPT for an AI agent that would do it. Respond with ONLY valid minified JSON, no markdown and no preamble, in exactly this shape: {\"title\":\"short name for the automation\",\"summary\":\"1-2 plain sentences a non-technical owner understands\",\"benefit\":\"an estimated payoff phrased as a possibility, e.g. Your team could save roughly 6 hours a week\",\"timeline\":\"a rough build duration ONLY, like 2-3 weeks\",\"steps\":[\"step\",\"step\",\"step\"],\"questions\":[\"question\",\"question\"]}. Rules: 3 to 5 steps, each under 12 words, describing how the agent works start to finish. Benefit MUST be phrased as an estimate, never a promise or guarantee. Timeline is ONLY a rough duration phrase. NEVER mention price, cost, fees, or dollar amounts anywhere. 1 to 2 short clarifying questions you would need answered to build it. Be specific to their task. Task: \"' + this.state.value + '\". Business type: ' + (a.business_type || 'not specified') + '. Role: ' + (a.role || 'not specified') + '. Time spent weekly: ' + (a.hours || 'not specified') + '. Desired timeline: ' + (a.timeline || 'not specified') + '.';
+    let sol;
+    try {
+      const resp = await fetch('/.netlify/functions/generate-plan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          brief: this.state.value,
+          business_type: a.business_type || '',
+          role: a.role || '',
+          hours: a.hours || '',
+          timeline: a.timeline || ''
+        })
+      });
+      if (resp.ok) {
+        const o = await resp.json();
+        sol = this.parseSolution(JSON.stringify(o));
+      } else {
+        sol = this.fallbackSolution();
+      }
+    } catch (e) { sol = this.fallbackSolution(); }
+    this.stopDots();
+    this.setState({ phase: 'solution', solution: sol }, () => { try { this.finishLead(); } catch (e) {} });
+  }
+  parseSolution(raw) {
+    try {
+      let t = String(raw).trim();
+      const s = t.indexOf('{'), e = t.lastIndexOf('}');
+      if (s >= 0 && e > s) t = t.slice(s, e + 1);
+      const o = JSON.parse(t);
+      return { title: o.title || 'Your automation', summary: o.summary || '', benefit: o.benefit || '', timeline: o.timeline || '', steps: Array.isArray(o.steps) ? o.steps.slice(0, 5) : [], questions: Array.isArray(o.questions) ? o.questions.slice(0, 2) : [] };
+    } catch (_) { return { title: 'Your automation', summary: String(raw).slice(0, 240), benefit: '', timeline: '', steps: [], questions: [] }; }
+  }
+  fallbackSolution() {
+    return { title: 'Your custom agent', summary: 'A starting concept based on what you described. We refine the details together on your review call.', benefit: 'Your team could save roughly several hours a week, with fewer manual errors.', timeline: '2–4 weeks', steps: ['Trigger: the agent watches for the task', 'It gathers the inputs and applies your rules', 'It drafts the result for your review', 'You approve, and it completes the work', 'Every action is logged for your records'], questions: ['Which tools and accounts should it connect to?', 'Who signs off before anything goes out?'] };
+  }
+  startDots() {
+    let n = 0;
+    clearInterval(this._dotsInt);
+    this._dotsInt = setInterval(() => { n = (n + 1) % 4; if (this.dotsRef.current) this.dotsRef.current.textContent = '.'.repeat(n); }, 380);
+  }
+  stopDots() { clearInterval(this._dotsInt); if (this.dotsRef.current) this.dotsRef.current.textContent = ''; }
+  spin() {
+    if (this.state.phase !== 'building') { return; }
+    const el = this.spinnerRef.current;
+    if (el) { this._ang = (this._ang || 0) + 7; el.style.transform = 'rotate(' + this._ang + 'deg)'; }
+    this._spinRaf = requestAnimationFrame(() => this.spin());
+  }
+  loadLogo() {
+    try {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const vbAR = 708.46 / 74.13;
+          const cw = 1500, ch = Math.round(cw / vbAR);
+          const c = document.createElement('canvas');
+          c.width = cw; c.height = ch;
+          c.getContext('2d').drawImage(img, 0, 0, cw, ch);
+          this._logoPng = c.toDataURL('image/png');
+          this._logoAR = vbAR;
+        } catch (e) {}
+      };
+      img.src = 'assets/simerson-logo-color.svg';
+    } catch (e) {}
+  }
+  downloadPDF = (silent) => {
+    const sol = this.state.solution;
+    if (!sol) { return; }
+    const J = window.jspdf && window.jspdf.jsPDF;
+    if (!J) { return; }
+    try {
+      const doc = new J({ unit: 'pt', format: 'letter' });
+      const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
+      const M = 54, CW = W - M * 2;
+      const gold = [168,132,47], goldL = [198,163,92], ink = [21,19,15], soft = [109,104,94], bg = [250,249,247], cardBg = [252,251,249], line = [231,226,216], gray = [150,146,138];
+      doc.setFillColor(bg[0],bg[1],bg[2]); doc.rect(0,0,W,H,'F');
+      const textLines = (str, x, yy, size, color, opt) => {
+        opt = opt || {};
+        doc.setFont('helvetica', opt.bold ? 'bold' : (opt.italic ? 'italic' : 'normal'));
+        doc.setFontSize(size);
+        const c = color || ink; doc.setTextColor(c[0],c[1],c[2]);
+        const w = opt.w || CW, lh = opt.lh || size + 4;
+        let lines = doc.splitTextToSize(String(str || ''), w);
+        if (opt.max) lines = lines.slice(0, opt.max);
+        lines.forEach(ln => { doc.text(ln, x, yy, { charSpace: opt.cs || 0, align: opt.align || 'left' }); yy += lh; });
+        return yy;
+      };
+      let y = 50;
+      if (this._logoPng) {
+        const lw = 152, lh = lw / (this._logoAR || 9.56);
+        doc.addImage(this._logoPng, 'PNG', (W - lw) / 2, y - 6, lw, lh);
+        y += lh + 8;
+      } else {
+        doc.setFont('helvetica','bold'); doc.setFontSize(20);
+        const a = 'Simerson', b = 'Ai';
+        const wa = doc.getTextWidth(a), wb = doc.getTextWidth(b), sx0 = (W - (wa + wb)) / 2;
+        doc.setTextColor(ink[0],ink[1],ink[2]); doc.text(a, sx0, y + 6);
+        doc.setTextColor(gold[0],gold[1],gold[2]); doc.text(b, sx0 + wa, y + 6);
+        y += 24;
+      }
+      doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(gold[0],gold[1],gold[2]);
+      var _sub = 'AUTOMATION GAME PLAN', _cs = 2;
+      var _subW = doc.getTextWidth(_sub) + _cs * (_sub.length - 1);
+      doc.text(_sub, W / 2 - _subW / 2, y, { charSpace: _cs });
+      y += 13;
+      doc.setDrawColor(line[0],line[1],line[2]); doc.setLineWidth(1); doc.line(M, y, W - M, y);
+      y += 24;
+      const nodes = ['Map','Build','Automate'], rr = 8, gap = CW / 3;
+      doc.setDrawColor(line[0],line[1],line[2]); doc.setLineWidth(1);
+      doc.line(M + gap / 2, y, M + CW - gap / 2, y);
+      nodes.forEach((n, i) => {
+        const cx = M + gap / 2 + i * gap;
+        if (i === 0) { doc.setFillColor(ink[0],ink[1],ink[2]); doc.circle(cx, y, rr, 'F'); doc.setTextColor(255,255,255); }
+        else if (i === 2) { doc.setFillColor(gold[0],gold[1],gold[2]); doc.circle(cx, y, rr, 'F'); doc.setTextColor(255,255,255); }
+        else { doc.setFillColor(255,255,255); doc.setDrawColor(line[0],line[1],line[2]); doc.circle(cx, y, rr, 'FD'); doc.setTextColor(gold[0],gold[1],gold[2]); }
+        doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.text(String(i + 1), cx, y + 3, { align: 'center' });
+        doc.setFontSize(8); doc.setTextColor(soft[0],soft[1],soft[2]); doc.text(n.toUpperCase(), cx, y + 20, { align: 'center', charSpace: 1 });
+      });
+      y += 44;
+      const label = (str) => {
+        doc.setDrawColor(gold[0],gold[1],gold[2]); doc.setLineWidth(1); doc.line(M, y - 3, M + 16, y - 3);
+        doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(gold[0],gold[1],gold[2]);
+        doc.text(String(str).toUpperCase(), M + 24, y, { charSpace: 1.2 });
+        y += 15;
+      };
+      label('Your Request');
+      y = textLines('“' + this.state.value + '”', M, y, 11, soft, { italic: true, lh: 14, max: 2 });
+      y += 10;
+      label('What We’d Build');
+      y = textLines(sol.title || 'Your custom agent', M, y, 14.5, ink, { bold: true, lh: 18 });
+      y += 2;
+      if (sol.summary) y = textLines(sol.summary, M, y, 10.5, soft, { lh: 13.5, max: 3 });
+      y += 12;
+      let benefit = sol.benefit || 'Your team could save roughly several hours a week.';
+      if (!/depend/i.test(benefit)) benefit = benefit.replace(/\s*$/, '') + ' (Exact savings depend on your current process. We confirm on the call.)';
+      const dur = (sol.timeline || '2–4 weeks').replace(/^(about|around|roughly|approximately|~)\s*/i, '');
+      const timeline = 'Estimated build time: ~' + dur + ' for a workflow like this, confirmed after a quick scoping call.';
+      const cardW = (CW - 16) / 2, pad = 14;
+      doc.setFont('helvetica','normal'); doc.setFontSize(10);
+      const bL = doc.splitTextToSize(benefit, cardW - pad * 2);
+      const tL = doc.splitTextToSize(timeline, cardW - pad * 2);
+      const cardH = Math.max(bL.length, tL.length) * 13.5 + pad * 2 + 18;
+      const drawCard = (x, lab, lines) => {
+        doc.setFillColor(cardBg[0],cardBg[1],cardBg[2]); doc.setDrawColor(line[0],line[1],line[2]); doc.setLineWidth(1);
+        doc.roundedRect(x, y, cardW, cardH, 8, 8, 'FD');
+        doc.setFont('helvetica','bold'); doc.setFontSize(8); doc.setTextColor(gold[0],gold[1],gold[2]);
+        doc.text(lab.toUpperCase(), x + pad, y + pad + 5, { charSpace: 1 });
+        doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(ink[0],ink[1],ink[2]);
+        let yy = y + pad + 20;
+        lines.forEach(ln => { doc.text(ln, x + pad, yy); yy += 13.5; });
+      };
+      drawCard(M, 'The Benefit', bL);
+      drawCard(M + cardW + 16, 'Timeline', tL);
+      y += cardH + 18;
+      if (sol.steps && sol.steps.length) {
+        label('How It Works');
+        doc.setFont('helvetica','normal'); doc.setFontSize(10);
+        sol.steps.slice(0, 5).forEach((s, i) => {
+          const str = String(s).trim();
+          const di = str.search(/\s[\u2014\u2013-]\s/);
+          const title = di > -1 ? str.slice(0, di).trim() : '';
+          const body = di > -1 ? str.slice(di).replace(/^\s*[\u2014\u2013-]\s*/, '').trim() : str;
+          const topY = y + 7;
+          doc.setFillColor(gold[0],gold[1],gold[2]); doc.circle(M + 8, topY, 7.5, 'F');
+          doc.setFont('helvetica','bold'); doc.setFontSize(8.5); doc.setTextColor(255,255,255);
+          doc.text(String(i + 1), M + 8, topY + 3, { align: 'center' });
+          let ty = topY + 3;
+          if (title) {
+            doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(gold[0],gold[1],gold[2]);
+            const tline = doc.splitTextToSize(title, CW - 34)[0];
+            doc.text(tline, M + 26, ty); ty += 13;
+          }
+          doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(ink[0],ink[1],ink[2]);
+          const bodyLines = doc.splitTextToSize(body, CW - 34).slice(0, 3);
+          bodyLines.forEach(ln => { doc.text(ln, M + 26, ty); ty += 12.5; });
+          y += (ty - (topY + 3)) + 9;
+        });
+        y += 10;
+      }
+      if (sol.questions && sol.questions.length) {
+        label('What We’d Confirm');
+        doc.setFont('helvetica','normal'); doc.setFontSize(10); doc.setTextColor(soft[0],soft[1],soft[2]);
+        sol.questions.slice(0, 2).forEach(q => {
+          const lines = doc.splitTextToSize(String(q), CW - 16).slice(0, 2);
+          doc.setFillColor(gold[0],gold[1],gold[2]); doc.circle(M + 3, y - 3, 1.8, 'F');
+          let ty = y;
+          lines.forEach(ln => { doc.text(ln, M + 14, ty); ty += 13; });
+          y = ty;
+        });
+      }
+      const ctaY = 700;
+      doc.setFillColor(ink[0],ink[1],ink[2]); doc.roundedRect(M, ctaY, CW, 44, 9, 9, 'F');
+      const p1 = 'Book your free 15-minute assessment at ', p2 = 'calendly.com/simersonai';
+      doc.setFont('helvetica','bold'); doc.setFontSize(11);
+      const w1 = doc.getTextWidth(p1), w2 = doc.getTextWidth(p2), sx2 = W / 2 - (w1 + w2) / 2;
+      doc.setTextColor(255,255,255); doc.text(p1, sx2, ctaY + 27);
+      doc.setTextColor(goldL[0],goldL[1],goldL[2]); doc.textWithLink(p2, sx2 + w1, ctaY + 27, { url: 'https://calendly.com/simersonai/15min' });
+      doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(gray[0],gray[1],gray[2]);
+      const disc = 'This is a preliminary concept based on your description, not a quote or commitment. Final scope, timeline, and pricing are confirmed on your free review call.';
+      const dLines = doc.splitTextToSize(disc, CW);
+      let dy = 762;
+      dLines.forEach(ln => { doc.text(ln, W / 2, dy, { align: 'center' }); dy += 11; });
+      try { this._lastPdfB64 = (doc.output('datauristring').split(',')[1]) || ''; } catch (e) { this._lastPdfB64 = ''; }
+      if (silent) { return; }
+      try {
+        var _blob = doc.output('blob');
+        var _url = URL.createObjectURL(_blob);
+        var _a = document.createElement('a');
+        _a.href = _url; _a.download = 'SimersonAi-Game-Plan.pdf'; _a.rel = 'noopener'; _a.target = '_blank';
+        document.body.appendChild(_a); _a.click(); document.body.removeChild(_a);
+        setTimeout(function(){ try { URL.revokeObjectURL(_url); } catch(e){} }, 8000);
+      } catch (e) {
+        try { doc.save('SimersonAi-Game-Plan.pdf'); } catch (e2) {}
+      }
+    } catch (e) { console.log('PDF generation failed', e && e.message); }
+  };
+  opts(key, labels) {
+    const SEL = "background:var(--ink);color:#fff;border:1px solid var(--ink);font-family:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:999px;cursor:pointer";
+    const UN = "background:#fff;color:var(--ink-soft);border:1px solid var(--line);font-family:inherit;font-size:13px;font-weight:500;padding:8px 14px;border-radius:999px;cursor:pointer";
+    return labels.map(l => ({ label: l, pick: () => this.setState(s => ({ answers: Object.assign({}, s.answers, { [key]: l }) })), style: this.state.answers[key] === l ? SEL : UN }));
+  }
+  renderVals() {
+    const sol = this.state.solution || {};
+    return {
+      root: this.rootRef,
+      box: this.boxRef,
+      overlay: this.overlayRef,
+      overlayText: this.overlayTextRef,
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      value: this.state.value,
+      phaseQuestions: this.state.phase === 'questions',
+      phaseEmail: this.state.phase === 'email',
+      phaseDone: this.state.phase === 'done',
+      phaseContact: this.state.phase === 'contact',
+      gName: this.gNameRef, gCompany: this.gCompanyRef, gEmail: this.gEmailRef, gPhone: this.gPhoneRef, gErr: this.gErrRef,
+      submitGate: this.submitGate,
+      q1: this.opts('business_type', ['Home care / caregiving', 'Home health', 'Skilled nursing / post-acute', 'Staffing agency', 'Marketing / professional services', 'Other']),
+      q2: this.opts('role', ['Owner / CEO / Founder', 'Director / VP', 'Manager', 'Other']),
+      q3: this.opts('hours', ['Under 5 hours', '5–15 hours', '15+ hours', 'Not sure yet']),
+      q4: this.opts('timeline', ['ASAP / this month', '1–3 months', 'Just exploring']),
+      toEmail: () => this.setState({ phase: 'email' }),
+      backToQuestions: () => this.setState({ phase: 'questions' }),
+      email: this.emailRef, emailErr: this.emailErrRef, emailEcho: this.emailEchoRef,
+      submitEmail: this.submitEmail, emailKey: this.emailKey,
+      generate: this.generate,
+      phaseBuilding: this.state.phase === 'building',
+      phaseSolution: this.state.phase === 'solution',
+      spinner: this.spinnerRef, dots: this.dotsRef,
+      solTitle: sol.title || 'Your automation',
+      solSummary: sol.summary || '',
+      solBenefit: sol.benefit || 'You could save several hours a week, with fewer manual errors.',
+      solTimeline: sol.timeline ? ('Est. build time ~' + sol.timeline) : 'Est. build time ~2–4 weeks',
+      downloadPDF: () => this.downloadPDF(false),
+      solSteps: (sol.steps || []).map((t, i) => {
+        const str = String(t).trim();
+        const di = str.search(/\s[\u2014\u2013-]\s/);
+        if (di > -1) { return { n: i + 1, title: str.slice(0, di).trim(), body: str.slice(di).replace(/^\s*[\u2014\u2013-]\s*/, '').trim() }; }
+        return { n: i + 1, title: '', body: str };
+      }),
+      solQuestions: sol.questions || [],
+      hasSteps: !!(sol.steps && sol.steps.length),
+      hasQuestions: !!(sol.questions && sol.questions.length),
+      onInput: this.onInput,
+      submit: this.submit,
+      reset: this.reset,
+      chips: this.chipData.map(c => ({ label: c.label, pick: () => this.pick(c.text) })),
+      marquee: this.marqueeRef,
+      logoEls: this.clientLogos.map((l, i) => React.createElement('div', { key: i, style: { display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 16px' } },
+          React.createElement('img', { src: l.src, alt: l.alt, style: { maxHeight: '100px', maxWidth: '270px', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' } })
+        )),
+      howRow: this.howRowRef,
+      s1bar: this.s1barRef, s2dot: this.s2dotRef, s3blocks: this.s3blocksRef,
+      s4track: this.s4trackRef, s4knob: this.s4knobRef, s4label: this.s4labelRef,
+      h1on: () => this.hover(1, true), h1off: () => this.hover(1, false),
+      h2on: () => this.hover(2, true), h2off: () => this.hover(2, false),
+      h3on: () => this.hover(3, true), h3off: () => this.hover(3, false),
+      h4on: () => this.hover(4, true), h4off: () => this.hover(4, false),
+      results: this.resultsRef, barManual: this.barManualRef, barAuto: this.barAutoRef,
+      stat1: this.stat1Ref, stat2: this.stat2Ref, stat3: this.stat3Ref,
+      cName: this.cNameRef, cEmail: this.cEmailRef, cMsg: this.cMsgRef, cErr: this.cErrRef,
+      submitContact: this.submitContact,
+      contactSent: this.state.contactSent, contactNotSent: !this.state.contactSent,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# Tells Netlify where the serverless function lives so it deploys on drag-and-drop.
+[build]
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
