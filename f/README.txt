@@ -5,9 +5,12 @@
 WHAT THIS IS
   Three phone-friendly landing pages, one per audience:
 
-    simersonai.com/f/hospice   → hospice & palliative care
-    simersonai.com/f/billing   → medical billing companies
-    simersonai.com/f/ymca      → YMCA / community org
+    simersonai.com/f/hospice      → hospice & palliative care
+    simersonai.com/f/billing      → medical billing companies
+    simersonai.com/f/ymca         → YMCA / community org
+    simersonai.com/f/snf          → skilled nursing facilities
+    simersonai.com/f/homehealth   → home health agencies
+    simersonai.com/f/caregivers   → home care & caregiver agencies
 
   Each page has two buttons:
     • "Explore Simerson Ai"  → simersonai.com  (with tracking, see below)
@@ -65,6 +68,23 @@ TEXT-MESSAGE COPY  (copy-paste, then send with the link)
     "Hi [name] — Bear with Simerson Ai. Here's how we help a Y handle the
      phones and front-desk sign-ups 24/7 so staff can focus on members:
      simersonai.com/f/ymca"
+
+  SNF:
+    "Hi [name] — Bear with Simerson Ai. Quick look at the AI agent team we
+     build for a skilled nursing facility — referral & admissions intake,
+     insurance auth, front desk, MDS docs, all human-approved:
+     simersonai.com/f/snf"
+
+  HOME HEALTH:
+    "Hi [name] — Bear with Simerson Ai. Here's how we work a home health
+     agency's intake from referral to admit — eligibility, scheduling, OASIS,
+     the intake line — with a human approving each step:
+     simersonai.com/f/homehealth"
+
+  CAREGIVERS (home care agency):
+    "Hi [name] — Bear with Simerson Ai. Quick look at how we keep every shift
+     covered — 24/7 intake, filling call-offs, family updates, scheduling:
+     simersonai.com/f/caregivers"
 
   TIP: Texting the LINK (not the image) lets them tap the buttons and email
   you back with the source pre-filled. Text the PNG image only when you just
