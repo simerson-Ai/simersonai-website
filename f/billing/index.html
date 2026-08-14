@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Simerson Ai — AI agents that work your claims</title>
+<meta name="description" content="Compliance-first digital workers that take billing busywork off your team — human-approved, fully audited." />
+<meta property="og:title" content="AI agents that work your claims — not just chat" />
+<meta property="og:description" content="Compliance-first digital workers that take the billing busywork off your team." />
+<meta property="og:type" content="website" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#967C3A;--gold-lt:#C9A863;--cream:#F5F1E8;--ink:#0A0A0A;}
+html{-webkit-text-size-adjust:100%;}
+body{background:#0A0A0A;font-family:'Inter',sans-serif;color:var(--cream);
+  min-height:100vh;display:flex;justify-content:center;}
+.page{position:relative;width:100%;max-width:620px;overflow:hidden;
+  background:#0A0A0A;display:flex;flex-direction:column;min-height:100vh;}
+.page::before{content:"";position:absolute;top:-160px;right:-160px;width:520px;height:520px;
+  background:radial-gradient(circle,rgba(150,124,58,0.28) 0%,rgba(150,124,58,0.05) 45%,rgba(10,10,10,0) 70%);
+  pointer-events:none;}
+.body{position:relative;flex:1;padding:clamp(28px,7vw,52px) clamp(22px,6vw,48px) 32px;
+  display:flex;flex-direction:column;}
+.brand{display:flex;align-items:center;gap:14px;margin-bottom:clamp(28px,7vw,44px);}
+.wordmark{font-family:'Space Grotesk';font-weight:700;font-size:clamp(20px,5.5vw,28px);
+  letter-spacing:2px;color:#FFF;}
+.wordmark b{color:var(--gold);}
+.logo{height:30px;width:auto;display:block;}
+.brand .rule{flex:1;height:1px;background:linear-gradient(90deg,rgba(150,124,58,0.55),rgba(150,124,58,0));}
+.eyebrow{font-family:'Space Grotesk';font-weight:600;font-size:clamp(12px,3.4vw,15px);
+  letter-spacing:3.5px;text-transform:uppercase;color:#B8965A;margin-bottom:18px;}
+h1{font-family:'Space Grotesk';font-weight:700;font-size:clamp(34px,9vw,58px);
+  line-height:1.04;letter-spacing:-1px;color:var(--cream);}
+h1 .g{color:var(--gold-lt);}
+.divider{width:84px;height:4px;background:var(--gold);border-radius:3px;margin:24px 0 22px;}
+.sub{font-size:clamp(16px,4.4vw,21px);line-height:1.5;color:#B0AA9E;}
+.features{margin-top:clamp(30px,7vw,44px);display:flex;flex-direction:column;gap:18px;}
+.feat{display:flex;align-items:flex-start;gap:16px;}
+.ic{flex:0 0 44px;width:44px;height:44px;border-radius:50%;
+  border:1.6px solid rgba(150,124,58,0.65);background:rgba(150,124,58,0.10);
+  display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.ic svg{width:21px;height:21px;}
+.feat .ft{font-size:clamp(16px,4.4vw,21px);line-height:1.36;color:#EDE8DC;padding-top:7px;}
+.feat .ft b{color:#FFF;font-weight:600;}
+.trust{margin-top:auto;padding-top:34px;display:flex;flex-wrap:wrap;gap:9px 10px;}
+.chip{font-family:'Space Grotesk';font-weight:500;font-size:clamp(11px,3vw,13px);
+  letter-spacing:1px;text-transform:uppercase;color:var(--gold-lt);
+  border:1px solid rgba(150,124,58,0.4);border-radius:100px;padding:6px 13px;}
+.cta{background:linear-gradient(120deg,#967C3A,#7E6730);padding:clamp(26px,6vw,36px) clamp(22px,6vw,48px);}
+.cta .k{font-family:'Space Grotesk';font-weight:700;font-size:clamp(21px,5.6vw,28px);
+  color:var(--ink);letter-spacing:-0.3px;line-height:1.12;}
+.cta .s{font-size:clamp(14px,3.8vw,16px);color:#231C0C;margin-top:6px;font-weight:500;}
+.actions{margin-top:22px;display:flex;flex-direction:column;gap:12px;}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;
+  min-height:56px;border-radius:13px;text-decoration:none;
+  font-family:'Space Grotesk';font-weight:600;font-size:clamp(15px,4.2vw,18px);
+  letter-spacing:0.2px;transition:transform .06s ease,opacity .15s ease;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:#0A0A0A;color:var(--cream);border:1px solid #0A0A0A;}
+.btn-primary:hover{opacity:.92;}
+.btn-secondary{background:transparent;color:#0A0A0A;border:1.6px solid rgba(10,10,10,0.55);}
+.btn svg{width:19px;height:19px;}
+.foot{padding:20px clamp(22px,6vw,48px) 30px;font-size:12px;color:#6b665c;
+  font-family:'Space Grotesk';letter-spacing:0.4px;text-align:center;}
+.foot a{color:#8a8474;text-decoration:none;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="body">
+    <div class="brand">
+      <img class="logo" src="/assets/simerson-logo-white.png" alt="Simerson Ai" />
+      <span class="rule"></span>
+    </div>
+    <div class="eyebrow">For Medical Billing Companies</div>
+    <h1>AI agents that <span class="g">work your claims</span> — not just chat.</h1>
+    <div class="divider"></div>
+    <p class="sub">Compliance-first digital workers that take the billing busywork off your team — with a human approving every step and a full audit trail behind it.</p>
+
+    <div class="features">
+      <div class="feat">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A863" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        <span class="ft"><b>Verify eligibility &amp; benefits</b> before a claim ever goes out</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A863" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3 4 6v5c0 5 3.5 8 7 9 3.5-1 7-4 7-9V6z"/><path d="M9 11l2 2 4-4"/></svg></span>
+        <span class="ft"><b>Scrub claims</b> and catch denials before the payer does</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A863" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h6"/></svg></span>
+        <span class="ft"><b>Draft appeals</b> and work A/R follow-up automatically</span>
+      </div>
+      <div class="feat">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#C9A863" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 9.5a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2z"/></svg></span>
+        <span class="ft"><b>Post patient statements</b> and handle billing calls</span>
+      </div>
+    </div>
+
+    <div class="trust">
+      <span class="chip">HIPAA-aware</span>
+      <span class="chip">BAA-backed</span>
+      <span class="chip">Human-in-the-loop</span>
+      <span class="chip">Full audit trail</span>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="k">See a live agent in action.</div>
+    <div class="s">Real operational work — built for your workflow, not a chatbot.</div>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://simersonai.com/?utm_source=flyer&utm_medium=print&utm_campaign=billing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+        Explore Simerson Ai
+      </a>
+      <a class="btn btn-secondary" href="mailto:bsimerson@simersonai.com?subject=AI%20billing%20agents%20-%20tell%20me%20more&body=Source%3A%20billing-flyer%0D%0A%0D%0AHi%20Bear%2C%20I%20saw%20the%20Simerson%20Ai%20billing%20flyer%20and%27d%20like%20to%20learn%20more.%0D%0A%0D%0AOur%20company%3A%20%0D%0ABest%20number%20to%20reach%20me%3A%20">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        Email Bear directly
+      </a>
+    </div>
+  </div>
+  <div class="foot">SimersonAi, LLC &nbsp;·&nbsp; <a href="https://simersonai.com/?utm_source=flyer&utm_medium=print&utm_campaign=billing">simersonai.com</a> &nbsp;·&nbsp; bsimerson@simersonai.com</div>
+</div>
+</body>
+</html>
