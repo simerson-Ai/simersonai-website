@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cora: AI Receptionist & Answering Service for Home Health | Simerson Ai</title>
+<meta name="description" content="Cora is an AI receptionist for home health and senior care agencies. She answers every call 24/7, captures intake, books assessments, and escalates the urgent ones, all HIPAA compliant.">
+<meta name="keywords" content="AI receptionist home health, medical answering service, 24/7 patient intake, HIPAA receptionist, home care answering service">
+<link rel="canonical" href="https://simersonai.com/ai-receptionist.html">
+<meta property="og:title" content="Cora: AI Receptionist & Answering Service for Home Health | Simerson Ai">
+<meta property="og:description" content="An AI receptionist that answers every call 24/7, captures intake, books assessments, and escalates the urgent ones, with a human in control.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simersonai.com/ai-receptionist.html">
+<meta property="og:image" content="https://simersonai.com/assets/simerson-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz@1,6..72&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#faf9f7;--ink:#15130f;--ink-soft:#6d685e;--gold:#a8842f;--gold-lite:#c6a35c;--line:#e7e2d8;--red:#c0493f;--amber:#b7822c;--green:#4f8a52}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Hanken Grotesk',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6}
+  ::selection{background:rgba(168,132,47,0.2)}
+  a{color:inherit}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  .narrow{max-width:720px;margin:0 auto;padding:0 24px}
+  /* nav */
+  header.nav{position:sticky;top:0;z-index:50;background:rgba(250,249,247,0.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1100px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+  .nav-links{display:flex;gap:28px;font-size:15px;font-weight:500;color:var(--ink-soft)}
+  .nav-links a{text-decoration:none;color:inherit}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-right{display:flex;align-items:center;gap:20px}
+  .nav-phone{font-size:14.5px;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .nav-cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:14px;font-weight:600;padding:11px 19px;border-radius:3px;text-decoration:none}
+  /* hero */
+  .hero{position:relative;text-align:center;padding:76px 24px 20px;overflow:hidden}
+  .hero .glow{position:absolute;top:-30%;left:50%;transform:translateX(-50%);width:720px;height:460px;background:radial-gradient(closest-side,rgba(198,163,92,0.16),transparent);filter:blur(22px);pointer-events:none}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold)}
+  .eyebrow .bar{width:18px;height:1px;background:var(--gold)}
+  .hero h1{position:relative;font-weight:700;font-size:clamp(38px,5.6vw,64px);line-height:1.02;letter-spacing:-0.03em;margin:20px 0 18px}
+  .hero h1 em{font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold);display:block}
+  .hero p{position:relative;font-size:19px;line-height:1.55;color:var(--ink-soft);max-width:600px;margin:0 auto 28px}
+  .hero-cta{position:relative;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:15px;font-weight:600;padding:14px 26px;border-radius:9px;text-decoration:none}
+  .hero-cta span{color:var(--gold-lite)}
+  .stats{display:flex;justify-content:center;gap:40px;flex-wrap:wrap;margin:46px 0 10px;position:relative}
+  .stat b{display:block;font-size:34px;font-weight:700;letter-spacing:-0.02em}
+  .stat small{font-size:13px;color:var(--ink-soft);font-family:'JetBrains Mono',monospace;letter-spacing:0.04em}
+  /* section intro */
+  .sec-intro{text-align:center;padding:70px 24px 10px}
+  .sec-intro h2{font-weight:700;font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-0.02em;margin:16px auto 12px;max-width:640px}
+  .sec-intro h2 em{font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)}
+  .sec-intro p{font-size:18px;color:var(--ink-soft);max-width:560px;margin:0 auto}
+  /* timeline — centered spine, steps alternate right / left */
+  .flow{position:relative;padding:40px 0 20px}
+  .flow:before{content:"";position:absolute;left:50%;transform:translateX(-50%);top:20px;bottom:20px;width:2px;background:var(--line)}
+  .step{position:relative;display:grid;grid-template-columns:1fr 56px 1fr;align-items:start;padding:28px 0;opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .step.in{opacity:1;transform:none}
+  .node{grid-column:2;justify-self:center;position:relative;z-index:2;width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+  .node svg{width:26px;height:26px}
+  .step.in .node{border-color:var(--gold)}
+  .step-body{padding-top:2px}
+  .step:nth-child(odd) .step-body{grid-column:3;padding-left:40px;text-align:left}
+  .step:nth-child(even) .step-body{grid-column:1;padding-right:40px;text-align:right}
+  .step:nth-child(even) .mock{margin-left:auto;text-align:left}
+  .step-k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+  .step-body h3{font-size:22px;font-weight:700;letter-spacing:-0.015em;margin:0 0 8px}
+  .step-body>p{font-size:16.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 16px;max-width:560px}
+  /* mockup card */
+  .mock{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 44px -34px rgba(21,19,15,.26);padding:18px;max-width:460px}
+  .mock-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .mock-h .t{font-size:13px;font-weight:600}
+  .chip{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;padding:4px 9px;border-radius:6px}
+  .chip.gold{background:var(--gold);color:#fff}
+  .chip.line{border:1px solid var(--line);color:var(--ink-soft)}
+  .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+  .row:first-of-type{border-top:none}
+  .row .lab{font-size:13px;color:var(--ink-soft);flex:1}
+  .row .val{font-size:13px;font-weight:600}
+  .dotflag{width:10px;height:10px;border-radius:50%;flex:0 0 auto}
+  .r{background:var(--red)}.a{background:var(--amber)}.g{background:var(--green)}
+  .bar{height:8px;border-radius:999px;background:#ece6d8;overflow:hidden}
+  .bar>i{display:block;height:100%;background:var(--gold)}
+  .bubble{background:#faf9f7;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.5}
+  .bubble .from{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;color:var(--gold);margin-bottom:5px;text-transform:uppercase}
+  .approve{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;color:var(--ink-soft)}
+  .approve b{color:var(--ink);font-weight:600}
+  .tick{width:16px;height:16px;border-radius:5px;background:var(--gold);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 auto}
+  .dash{width:16px;height:16px;border-radius:5px;border:1.5px dashed var(--gold);flex:0 0 auto;box-sizing:border-box}
+  /* control + learn bands */
+  .band{background:var(--ink);color:#fff;border-radius:20px;padding:44px 40px;margin:50px 0;text-align:center}
+  .band .eyebrow{color:var(--gold-lite)}
+  .band .eyebrow .bar{background:var(--gold-lite)}
+  .band h2{font-weight:700;font-size:clamp(26px,3.6vw,40px);line-height:1.1;letter-spacing:-0.02em;margin:16px 0 12px}
+  .band p{color:#cfc9bd;font-size:17px;line-height:1.55;max-width:560px;margin:0 auto}
+  .learn{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0 10px}
+  .learn .c{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 20px}
+  .learn .c h4{font-size:16px;font-weight:700;margin:0 0 7px}
+  .learn .c p{font-size:14px;color:var(--ink-soft);line-height:1.5;margin:0}
+  /* final cta */
+  .final{text-align:center;padding:76px 24px 20px}
+  .final h2{font-weight:700;font-size:clamp(30px,4.2vw,50px);line-height:1.05;letter-spacing:-0.025em;margin:0 0 16px}
+  .final h2 em{font-family:'Newsreader',serif;font-style:italic;font-weight:400;color:var(--gold)}
+  .final p{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto 28px}
+  .final a{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;font-size:16px;font-weight:600;padding:15px 28px;border-radius:9px;text-decoration:none}
+  .final a span{color:var(--gold-lite)}
+  footer{border-top:1px solid var(--line);margin-top:60px;background:#fff}
+  .foot-in{max-width:1100px;margin:0 auto;padding:34px 24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--ink-soft)}
+  .foot-in a{color:inherit;text-decoration:none}.foot-in a:hover{color:var(--gold)}
+  @media (max-width:640px){.nav-links,.nav-phone{display:none}.learn{grid-template-columns:1fr}}
+  @media (max-width:760px){.flow:before{left:21px;transform:none}.step{grid-template-columns:44px 1fr;align-items:start;padding:20px 0}.node{grid-column:1;width:44px;height:44px}.node svg{width:21px;height:21px}.step:nth-child(odd) .step-body,.step:nth-child(even) .step-body{grid-column:2;padding:2px 0 0 16px;text-align:left}.step:nth-child(even) .mock{margin-left:0}}
+  @media (prefers-reduced-motion:reduce){.step{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-in">
+      <a href="index.html" style="display:flex;align-items:center;text-decoration:none"><img src="assets/simerson-logo-color.svg" alt="SimersonAi" style="height:24px;width:auto;display:block"></a>
+      <nav class="nav-links">
+        <a href="index.html#how">How it works</a>
+        <a href="use-cases.html">Digital Employees</a>
+        <a href="blog.html">Blog</a>
+        <a href="about.html">About</a>
+      </nav>
+      <div class="nav-right">
+        <a href="tel:+17604657500" class="nav-phone">(760) 465 7500</a>
+        <a href="index.html#prompt" class="nav-cta">Book a free assessment</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="eyebrow"><span class="bar"></span> Digital Employee &middot; Home Health &amp; Senior Care</div>
+    <h1>Meet Cora, your <em>AI receptionist.</em></h1>
+    <p>A missed call is a referral that went to whoever answered. Cora picks up every time, day or night, captures what matters, and books the assessment, while your team stays in control.</p>
+    <a href="index.html#prompt" class="hero-cta">Hear Cora on your line <span>&rarr;</span></a>
+    <div class="stats">
+      <div class="stat"><b>24/7</b><small>ANSWERS EVERY CALL</small></div>
+      <div class="stat"><b>Every call</b><small>CAPTURED AND LOGGED</small></div>
+      <div class="stat"><b>You</b><small>APPROVE EACH MESSAGE</small></div>
+    </div>
+  </section>
+
+  <!-- INTRO -->
+  <div class="sec-intro">
+    <div class="eyebrow" style="justify-content:center"><span class="bar"></span> The workflow</div>
+    <h2>Watch Cora work a call, <em>start to finish.</em></h2>
+    <p>Everything a warm, sharp receptionist does, in order, without missing a ring. Scroll down to follow one call through.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="flow">
+
+      <!-- 1 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 9 6 15 15 15 1 0 2-1 2-2v-2.5a1.5 1.5 0 0 0-1.1-1.4l-3-.8a1.5 1.5 0 0 0-1.5.5l-.9 1a11 11 0 0 1-5-5l1-.9a1.5 1.5 0 0 0 .5-1.5l-.8-3A1.5 1.5 0 0 0 8.5 3H6c-1 0-2 1-2 2z"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 01</div><h3>The phone rings, day or night</h3>
+          <p>Cora answers in a warm voice, in your agency's name, with the required AB 489 disclosure that the caller is speaking with an assistant. No ring goes to voicemail.</p>
+          <div class="mock"><div class="mock-h"><span class="t">Incoming call</span><span class="chip gold">ANSWERED</span></div>
+            <div class="row"><span class="lab">Caller</span><span class="val">Sandra P.</span></div>
+            <div class="row"><span class="lab">Time</span><span class="val">Sat &middot; 10:52 PM</span></div>
+            <div class="row"><span class="lab">Greeting</span><span class="val">Agency name &middot; AB 489 read</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 02</div><h3>She captures every detail</h3>
+          <p>Who is calling, the patient, what they need, how urgent it is, and the best callback number. It all lands in one clean intake, no retyping, nothing forgotten.</p>
+          <div class="mock"><div class="mock-h"><span class="t">Call intake</span><span class="chip line">AUTO FILLED</span></div>
+            <div class="row"><span class="lab">Caller</span><span class="val">Daughter of patient</span></div>
+            <div class="row"><span class="lab">Patient</span><span class="val">R.P. &middot; 81 &middot; post hospital</span></div>
+            <div class="row"><span class="lab">Need</span><span class="val">Home care, 4 hours daily</span></div>
+            <div class="row"><span class="lab">Callback</span><span class="val">(760) 555 0188</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M9.5 9a2.5 2.5 0 0 1 4.6 1.3c0 1.7-2.1 2-2.1 3.2M12 17h0"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 03</div><h3>She answers the routine questions</h3>
+          <p>Hours, services, what to bring, which insurance you take, all from your own answers. Callers get a straight response instead of a promise that someone will call back.</p>
+          <div class="mock"><div class="mock-h"><span class="t">Questions and answers</span><span class="chip line">FROM YOUR FAQ</span></div>
+            <div class="bubble"><div class="from">Caller asked</div>Do you take Medicare, and what are your hours?</div>
+            <div class="bubble" style="margin-top:10px"><div class="from">Cora answered</div>Yes, we accept Medicare and most major plans. Our office is open 8 to 5, and care can be scheduled any day.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.2"/><path d="M3.5 9h17M8 3v4M16 3v4M9 14l2 2 4-4"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 04</div><h3>She books the assessment</h3>
+          <p>Cora offers real openings from your calendar and puts the assessment on the books, no phone tag, no back and forth. The caller hangs up with a time in hand.</p>
+          <div class="mock"><div class="mock-h"><span class="t">Assessment</span><span class="chip gold">CONFIRMED</span></div>
+            <div class="row"><span class="lab">Date</span><span class="val">Mon &middot; 11:00 AM</span></div>
+            <div class="row"><span class="lab">With</span><span class="val">Intake nurse</span></div>
+            <div class="row"><span class="lab">Confirmation</span><span class="val">Texted to caller</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h0"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 05</div><h3>She escalates the urgent ones</h3>
+          <p>Anything time sensitive gets texted to your on call person right away, with the context they need to act. The routine waits for morning, the urgent never does.</p>
+          <div class="mock"><div class="mock-h"><span class="t">To: on call manager</span><span class="chip gold">URGENT</span></div>
+            <div class="bubble"><div class="from">Cora alerted</div>Caller says patient fell, is awake and talking, family on scene. Needs a call back now. Number (760) 555 0188.</div>
+            <div class="approve"><span class="tick">&#10003;</span><span><b>Sent right away</b> &middot; routed to on call.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="step"><div class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 3z"/><path d="M8 9h8M8 12h5"/></svg></div>
+        <div class="step-body"><div class="step-k">Step 06</div><h3>She logs a clean summary</h3>
+          <p>Every call lands in your inbox as a tidy note, the caller, the need, what she did, and what's left for you. It's waiting for your team in the morning, nothing lost overnight.</p>
+          <div class="mock"><div class="mock-h"><span class="t">Overnight call log</span><span class="chip line">3 CALLS</span></div>
+            <div class="row"><span class="tick">&#10003;</span><span class="lab">R.P. intake &middot; assessment booked</span><span class="val">Done</span></div>
+            <div class="row"><span class="dotflag r"></span><span class="lab">Fall report &middot; escalated</span><span class="val">On call</span></div>
+            <div class="row"><span class="dash"></span><span class="lab">Billing question</span><span class="val">For office</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTROL BAND -->
+  <div class="wrap">
+    <div class="band">
+      <div class="eyebrow" style="justify-content:center"><span class="bar"></span> You stay in control</div>
+      <h2>Cora drafts. A person decides.</h2>
+      <p>Cora drafts and prepares, and a person on your team approves anything that reaches a patient or family. Signed BAA before any patient information flows, a full audit trail, and the AB 489 disclosure on patient facing messages. That's the line we never cross.</p>
+    </div>
+  </div>
+
+  <!-- LEARN -->
+  <div class="narrow" style="text-align:center;padding-top:10px">
+    <div class="eyebrow" style="justify-content:center"><span class="bar"></span> Gets better every week</div>
+    <h2 style="font-weight:700;font-size:clamp(26px,3.6vw,40px);letter-spacing:-0.02em;margin:16px 0 8px">It learns your agency.</h2>
+    <p style="font-size:18px;color:var(--ink-soft);margin:0 auto 10px;max-width:520px">Cora picks up how your office talks and what your callers ask, and gets sharper with every call she handles.</p>
+  </div>
+  <div class="wrap"><div class="learn">
+    <div class="c"><h4>Your answers</h4><p>Learns your real FAQs, so her replies need fewer edits and stay true to how your office actually answers.</p></div>
+    <div class="c"><h4>Your voice</h4><p>Picks up your agency's tone, so callers hear the warmth and manner of your own front desk.</p></div>
+    <div class="c"><h4>Your callers</h4><p>Spots the common requests and the ones that convert, so you can lean into the calls that fill your schedule.</p></div>
+  </div></div>
+
+  <!-- FINAL CTA -->
+  <div class="final">
+    <h2>Hear Cora on <em>your line.</em></h2>
+    <p>A free 15 minute listen to how Cora would handle the calls coming into your agency today.</p>
+    <a href="index.html#prompt">Book a free assessment <span>&rarr;</span></a>
+  </div>
+
+  <footer>
+    <div class="foot-in">
+      <div>&copy; 2026 SimersonAi. Palm Desert, California.</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap"><a href="use-cases.html">Digital Employees</a><a href="blog.html">Blog</a><a href="compliance.html">Compliance</a><a href="contact.html">Contact</a></div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      var steps = document.querySelectorAll('.step');
+      if(!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        steps.forEach(function(s){s.classList.add('in');}); return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, {threshold:0.25, rootMargin:'0px 0px -8% 0px'});
+      steps.forEach(function(s){ io.observe(s); });
+    })();
+  </script>
+</body>
+</html>
