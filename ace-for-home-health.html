@@ -238,11 +238,6 @@
 </div>
 
 <script>
-  /* Count how often the flyer is opened (fire-and-forget; never affects the page). */
-  try{
-    if(navigator.sendBeacon){navigator.sendBeacon('/.netlify/functions/flyer-metrics');}
-    else{fetch('/.netlify/functions/flyer-metrics',{method:'POST',keepalive:true}).catch(function(){});}
-  }catch(e){}
   (function(){
     var els=document.querySelectorAll('.reveal');
     function showAll(){els.forEach(function(e){e.classList.add('in')})}
