@@ -16,6 +16,11 @@
 <meta name="twitter:title" content="AI Digital Employees for Skilled Nursing & Home Health | Simerson Ai">
 <meta name="twitter:description" content="HIPAA compliant AI digital employees for skilled nursing, home health & senior care, at a fraction of a hire.">
 <script src="./support.js"></script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192.png">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 </head>
 <body>
 <x-dc>
@@ -1041,6 +1046,22 @@ class Component extends DCLogic {
     };
   }
 }
+</script>
+<script>
+/* hashScrollFix: content renders client-side, so a #prompt link (from this page or
+   another page) can land at the top before the target exists. Scroll once it's there. */
+(function(){
+  function go(){
+    var h = location.hash;
+    if(!h || h.length < 2) return false;
+    var el = document.getElementById(decodeURIComponent(h.slice(1)));
+    if(el){ el.scrollIntoView({behavior:'smooth', block:'start'}); return true; }
+    return false;
+  }
+  function arm(){ if(go()) return; var n=0,t=setInterval(function(){ if(go()||++n>50) clearInterval(t); },100); }
+  if(document.readyState==='complete') arm(); else window.addEventListener('load',arm);
+  window.addEventListener('hashchange',go);
+})();
 </script>
 </body>
 </html>
