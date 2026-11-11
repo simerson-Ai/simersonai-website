@@ -222,7 +222,7 @@
     <p class="eyebrow k">For more information or a pilot</p>
     <h2>Try Ace free for 2 weeks.</h2>
     <p class="nolock">No lock-ins.</p>
-    <a class="btn" href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener">Book your free pilot</a>
+    <a class="btn" href="/ace-pilot.html">Start your free pilot</a>
     <div class="sign">
       <b>Bear Simerson</b> · Business Development
       <span class="mono">(760) 465-7500 · bsimerson@simersonai.com</span>
@@ -238,11 +238,6 @@
 </div>
 
 <script>
-  /* Count opens (fire-and-forget; never affects the page). */
-  try{
-    if(navigator.sendBeacon){navigator.sendBeacon('/.netlify/functions/flyer-metrics');}
-    else{fetch('/.netlify/functions/flyer-metrics',{method:'POST',keepalive:true}).catch(function(){});}
-  }catch(e){}
   (function(){
     var els=document.querySelectorAll('.reveal');
     function showAll(){els.forEach(function(e){e.classList.add('in')})}

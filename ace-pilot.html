@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Start your free Ace pilot | Simerson Ai</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#0A0A0A;--ink2:#1B1B1E;--gold:#A8842F;--gray:#8A8A8A;--gray2:#5A5A5A;--line:#EAE7E0;--paper:#FFFFFF;--soft:#F6F5F1;--radius:14px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Hanken Grotesk',system-ui,sans-serif;color:var(--ink2);background:#EDEBE6;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .shell{max-width:452px;margin:0 auto;background:var(--paper);min-height:100vh;box-shadow:0 0 90px -24px rgba(0,0,0,.4)}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .top{text-align:center;padding:36px 28px 6px}
+  .eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--gray)}
+  .ace-logo{width:52px;height:52px;margin:14px auto 8px;display:block}
+  .ace-word{font-weight:800;font-size:40px;line-height:.95;letter-spacing:-.03em;color:var(--gold)}
+  main{padding:18px 28px 34px}
+  h1{font-weight:800;font-size:23px;line-height:1.14;letter-spacing:-.02em;color:var(--ink);text-align:center;margin-bottom:6px}
+  .lead{text-align:center;color:var(--gray2);font-size:14.5px;max-width:34ch;margin:0 auto 22px}
+  label{display:block;font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--ink);margin:14px 0 5px}
+  label .req{color:var(--gold)}
+  input,select{width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 13px;outline:none}
+  input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(168,132,47,.12)}
+  .hp{position:absolute;left:-9999px}
+  button{width:100%;margin-top:22px;background:var(--ink);color:#fff;font-family:inherit;font-weight:700;font-size:16px;border:none;border-radius:999px;padding:15px;cursor:pointer;transition:transform .15s ease}
+  button:hover{transform:translateY(-2px)}
+  .fine{text-align:center;font-size:12px;color:var(--gray);margin-top:14px}
+  .fine b{color:var(--gray2)}
+  footer{text-align:center;padding:26px 28px 40px;border-top:1px solid var(--line)}
+  footer img{height:26px;width:auto;display:block;margin:0 auto}
+  footer .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top">
+    <p class="eyebrow">Free 2-week pilot</p>
+    <svg class="ace-logo" viewBox="0 0 100 100" fill="none" aria-label="Ace">
+      <rect x="24" y="9" width="52" height="82" rx="9" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="4.5"/>
+      <path d="M34.2 31 L37 21 L39.8 31 M35.3 27.6 L38.7 27.6" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M50 13 C50 13 17 41 17 62 C17 76 30 83 43 76 C45 86 41 91 33 93 L67 93 C59 91 55 86 57 76 C70 83 83 76 83 62 C83 41 50 13 50 13 Z" fill="#A8842F" transform="translate(32.5 33) scale(0.085)"/>
+      <rect x="34" y="52" width="32" height="6" rx="3" fill="#2E7D4F"/>
+      <rect x="34" y="64" width="32" height="6" rx="3" fill="#A66A12"/>
+      <rect x="34" y="76" width="22" height="6" rx="3" fill="#C0392B"/>
+    </svg>
+    <div class="ace-word">Ace</div>
+  </div>
+
+  <main>
+    <h1>Start your free pilot.</h1>
+    <p class="lead">A few details so we can set Ace up for your agency — then pick a time that works.</p>
+
+    <form name="ace-pilot" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="aceForm">
+      <input type="hidden" name="form-name" value="ace-pilot" />
+      <p class="hp"><label>Don't fill this out: <input name="bot-field" /></label></p>
+
+      <label>Your name <span class="req">*</span></label>
+      <input name="name" required autocomplete="name" />
+
+      <label>Agency / facility <span class="req">*</span></label>
+      <input name="agency" required autocomplete="organization" />
+
+      <label>Work email <span class="req">*</span></label>
+      <input name="email" type="email" required autocomplete="email" />
+
+      <label>Phone <span class="req">*</span></label>
+      <input name="phone" type="tel" required autocomplete="tel" />
+
+      <label>Referrals per week</label>
+      <select name="weekly_referrals">
+        <option value="">Select…</option>
+        <option>Under 10</option>
+        <option>10–25</option>
+        <option>25–50</option>
+        <option>50–100</option>
+        <option>100+</option>
+      </select>
+
+      <label>Current intake system / EHR</label>
+      <input name="ehr" placeholder="e.g. PointClickCare, WellSky, CarePort, fax…" />
+
+      <button type="submit" id="aceSubmit">Continue to book my pilot →</button>
+      <p class="fine">Takes 20 seconds. Next step: pick a <b>15-minute</b> time. No lock-ins.</p>
+    </form>
+  </main>
+
+  <footer>
+    <img src="https://simersonai.com/assets/simerson-logo-color.svg" alt="Simerson Ai" />
+    <div class="tag">AI Automation &amp; Design</div>
+  </footer>
+</div>
+
+<script>
+  var CALENDLY = "https://calendly.com/simersonai/15min";
+  var form = document.getElementById('aceForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('aceSubmit').textContent = 'One moment…';
+    var body = new URLSearchParams(new FormData(form)).toString();
+    // Capture the lead in Netlify Forms, then send them to Calendly to book.
+    var go = function(){ window.location.href = CALENDLY; };
+    fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body })
+      .then(go).catch(go);
+  });
+</script>
+</body>
+</html>
