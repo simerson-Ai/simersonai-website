@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ace for Home Health &amp; SNF Admissions — referrals in, decisions out</title>
+<meta name="description" content="Ace reads every incoming referral — PDF, fax, or email — checks eligibility, documentation and authorization, and hands your coordinator a ranked, ready-to-admit worklist." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script>document.documentElement.className += ' js-reveal';</script>
+<style>
+  :root{
+    --navy:#22335C;       /* primary — structure, dark sections, headings */
+    --amber:#F2A93B;      /* action — CTAs */
+    --cream:#FAF6EE;      /* canvas */
+    --paper:#FFFFFF;      /* cards */
+    --sage:#8A8271;       /* muted ink */
+    --teal:#0E9F6E;       /* ACE product accent — screening / green-light */
+    --teal-soft:#E3F4EC;
+    --amberdot:#E0A32E;   /* YELLOW — verify */
+    --red:#D64545;        /* RED — don't visit */
+    --ink:#2B2B33;
+    --line:#E9E2D2;
+    --radius:18px;
+    --shadow:0 12px 30px -14px rgba(34,51,92,.30);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--navy);line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .shell{max-width:440px;margin:0 auto;background:var(--cream);min-height:100vh;overflow:hidden;position:relative;box-shadow:0 0 80px -20px rgba(0,0,0,.5);}
+  h1,h2,h3,h4,.brand-word,.eyebrow,.step-n,.btn{font-family:'Quicksand',sans-serif}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+  section{padding:38px 24px}
+
+  /* top bar */
+  .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:13px 20px;background:var(--navy);border-bottom:1px solid rgba(255,255,255,.08);}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo svg{display:block}
+  .brand-word{color:var(--cream);font-weight:700;font-size:21px;letter-spacing:-.5px}
+  .topbar .tag{color:#9aa6c0;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+
+  /* hero */
+  .hero{background:radial-gradient(130% 90% at 88% -12%, rgba(14,159,110,.32), transparent 60%), var(--navy);color:var(--cream);padding:34px 24px 30px;}
+  .hero h1{font-weight:700;font-size:31px;line-height:1.14;letter-spacing:-.02em;margin:12px 0 12px;color:#fff}
+  .hero h1 .hl{color:var(--amber)}
+  .hero p.sub{color:#c5cddf;font-size:15.5px;max-width:34ch}
+
+  /* signature: a referral, screened */
+  .scan-card{margin-top:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:16px 16px 14px;box-shadow:var(--shadow);}
+  .scan-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+  .scan-head .live{display:inline-flex;align-items:center;gap:6px;color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .live .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.8s ease-in-out infinite}
+  .scan-head .eta{color:#9aa6c0;font-size:12px;font-weight:600}
+  .scan-rows{position:relative;display:flex;flex-direction:column;gap:10px;padding:4px 0 2px;overflow:hidden}
+  .scan-row{display:flex;align-items:center;gap:10px;font-size:13px;color:#c5cddf}
+  .scan-row .rk{flex:none;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700}
+  .scan-row .ok{background:rgba(14,159,110,.18);color:#3ecf8e}
+  .scan-row .warn{background:rgba(224,163,46,.18);color:#e8b64e}
+  .scan-row b{color:#fff;font-weight:600}
+  .scan-row .muted{color:#9aa6c0}
+  .scanbar{position:absolute;left:-16px;right:-16px;height:30px;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(14,159,110,.16),transparent);border-top:1px solid rgba(14,159,110,.45);border-bottom:1px solid rgba(14,159,110,.45);animation:scan 2.8s ease-in-out infinite}
+  .endpoint-label{display:flex;justify-content:space-between;gap:8px;margin-top:12px}
+  .endpoint-label .a{color:#fff;font-weight:600;font-size:12px}
+  .endpoint-label .b{color:#3ecf8e;font-weight:700;font-size:12px;text-align:right}
+  .route-foot{display:flex;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.10)}
+  .chip{font-size:11px;font-weight:600;color:#c5cddf;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);padding:4px 9px;border-radius:999px}
+  .chip.wc{color:#3ecf8e;border-color:rgba(14,159,110,.5);background:rgba(14,159,110,.14)}
+  .chip.amber{color:#e8b64e;border-color:rgba(224,163,46,.45);background:rgba(224,163,46,.12)}
+  .chip.red{color:#e98b8b;border-color:rgba(214,69,69,.45);background:rgba(214,69,69,.12)}
+
+  /* problem */
+  .problem{background:var(--paper)}
+  .problem h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:10px 0 4px;color:var(--navy)}
+  .problem .lead{color:var(--sage);font-size:15px;margin-bottom:18px}
+  .pain{display:flex;gap:13px;padding:14px 0;border-top:1px solid var(--line)}
+  .pain:last-child{border-bottom:1px solid var(--line)}
+  .pain .ic{flex:none;width:38px;height:38px;border-radius:11px;background:var(--teal-soft);color:var(--teal);display:grid;place-items:center}
+  .pain h4{font-size:15px;font-weight:600;margin-bottom:1px;color:var(--navy)}
+  .pain p{font-size:13.5px;color:var(--sage)}
+
+  /* how it works */
+  .how{background:var(--cream)}
+  .how h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:10px 0 20px;color:var(--navy)}
+  .steps{position:relative;padding-left:6px}
+  .steps::before{content:"";position:absolute;left:20px;top:8px;bottom:16px;width:2px;background:linear-gradient(var(--teal),rgba(14,159,110,.15))}
+  .step{position:relative;display:flex;gap:16px;padding-bottom:20px}
+  .step:last-child{padding-bottom:0}
+  .step-n{flex:none;z-index:1;width:40px;height:40px;border-radius:50%;background:var(--paper);border:2px solid var(--teal);color:var(--teal);display:grid;place-items:center;font-weight:700;font-size:15px;box-shadow:0 4px 10px -4px rgba(14,159,110,.5)}
+  .step-b h4{font-size:15.5px;font-weight:600;margin:8px 0 2px;color:var(--navy)}
+  .step-b p{font-size:13.5px;color:var(--sage)}
+
+  /* benefits */
+  .benefits{background:var(--navy);color:var(--cream)}
+  .benefits h2{font-size:22px;font-weight:700;letter-spacing:-.01em;margin:10px 0 18px;color:#fff}
+  .bcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+  .bcard .bh{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+  .bcard .ic{flex:none;width:34px;height:34px;border-radius:10px;background:rgba(14,159,110,.20);color:var(--teal);display:grid;place-items:center}
+  .bcard h4{font-size:15.5px;font-weight:600;color:#fff}
+  .bcard p{font-size:13.5px;color:#c5cddf}
+  .bcard .win{color:var(--amber);font-weight:600}
+
+  /* trust */
+  .trust{background:var(--paper)}
+  .trust h3{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sage);margin-bottom:14px}
+  .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tpill{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;color:var(--navy);background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:11px 12px}
+  .tpill svg{flex:none;color:var(--teal)}
+
+  /* CTA */
+  .cta{background:radial-gradient(120% 120% at 15% 0%, rgba(14,159,110,.30), transparent 55%), var(--navy);color:var(--cream);text-align:center;padding:44px 26px 40px}
+  .cta h2{font-size:25px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px;color:#fff}
+  .cta p{color:#c5cddf;font-size:14.5px;max-width:32ch;margin:0 auto 22px}
+  .btn{display:inline-block;background:var(--amber);color:#3A2400;font-weight:700;font-size:16px;text-decoration:none;padding:15px 30px;border-radius:999px;box-shadow:0 12px 26px -10px rgba(242,169,59,.7);transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover,.btn:focus-visible{transform:translateY(-2px);box-shadow:0 16px 32px -10px rgba(242,169,59,.9)}
+  .cta .contact{margin-top:20px;font-size:13.5px;color:#9aa6c0}
+  .cta .contact b{color:#fff;font-weight:600}
+
+  footer{background:var(--navy);color:#7d88a3;text-align:center;padding:22px 24px 30px;font-size:11.5px;border-top:1px solid rgba(255,255,255,.08)}
+  footer .fword{font-family:'Quicksand',sans-serif;color:var(--cream);font-weight:600}
+
+  a:focus-visible,.btn:focus-visible{outline:3px solid var(--amber);outline-offset:3px}
+
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+  @keyframes scan{0%{top:-10px}55%{top:80px}100%{top:-10px}}
+  .js-reveal .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease}
+  .js-reveal .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none!important;transition:none!important}
+    .scanbar{top:34px}
+    .js-reveal .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- top bar — the Ace mark: a referral card, cleared (gold check) -->
+  <div class="topbar">
+    <div class="logo" aria-label="Ace">
+      <svg viewBox="0 0 40 40" width="31" height="31" fill="none" aria-hidden="true">
+        <rect x="7.5" y="4" width="25" height="32" rx="6" stroke="#FAF6EE" stroke-width="3.2"/>
+        <path d="M13.5 20.5 l4.2 4.2 l8-9.2" stroke="#F2A93B" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-word">ace</span>
+    </div>
+    <span class="tag">referrals in, decisions out</span>
+  </div>
+
+  <!-- hero -->
+  <section class="hero">
+    <p class="eyebrow">For home health &amp; SNF admissions</p>
+    <h1>Every referral <span class="hl">screened</span> — before a bed goes cold.</h1>
+    <p class="sub">Ace reads every incoming referral — PDF, fax, or email — checks eligibility, documentation and authorization, and hands your coordinator a ranked, ready-to-admit worklist. No pile. No missed admission.</p>
+
+    <div class="scan-card" aria-label="Example referral screen">
+      <div class="scan-head">
+        <span class="live"><span class="dot"></span> New referral</span>
+        <span class="eta">Screened · 18s</span>
+      </div>
+      <div class="scan-rows">
+        <span class="scanbar" aria-hidden="true"></span>
+        <div class="scan-row"><span class="rk ok">✓</span><span><b>Medicare A</b> <span class="muted">— eligible</span></span></div>
+        <div class="scan-row"><span class="rk ok">✓</span><span><b>Dx M17.0</b> <span class="muted">— covered</span></span></div>
+        <div class="scan-row"><span class="rk warn">!</span><span><b>Face-to-face</b> <span class="muted">— verify date</span></span></div>
+      </div>
+      <div class="endpoint-label">
+        <span class="a">Referral · Desert Regional (HH)</span>
+        <span class="b">GREEN · ready to admit</span>
+      </div>
+      <div class="route-foot">
+        <span class="chip wc">● Ready</span>
+        <span class="chip amber">1 to verify</span>
+        <span class="chip red">Don't visit</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- problem -->
+  <section class="problem reveal">
+    <p class="eyebrow">The daily grind</p>
+    <h2>Referrals shouldn't pile up on a desk.</h2>
+    <p class="lead">In most agencies, every referral is read by hand — eligibility checked, docs chased, auth verified — one PDF at a time, while the clock runs and the next agency calls the patient first.</p>
+
+    <div class="pain">
+      <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><h4>Slow intake loses the admission</h4><p>Whoever responds first wins the referral. One sitting in an inbox is revenue walking out the door to the agency down the street.</p></div>
+    </div>
+    <div class="pain">
+      <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg></div>
+      <div><h4>Hand-screening eats clinical hours</h4><p>A nurse reading every referral for eligibility and coverage is a nurse not seeing patients — the most expensive data-entry you can run.</p></div>
+    </div>
+    <div class="pain">
+      <div class="ic" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+      <div><h4>A missed detail is a denied claim</h4><p>A face-to-face gap or the wrong authorization, caught weeks later, means clawed-back revenue — and a compliance problem on the record.</p></div>
+    </div>
+  </section>
+
+  <!-- how it works -->
+  <section class="how reveal">
+    <p class="eyebrow">How it works</p>
+    <h2>One referral in, a clear decision out.</h2>
+    <div class="steps">
+      <div class="step"><div class="step-n">1</div><div class="step-b"><h4>Referral lands, any format</h4><p>PDF, fax, email, or portal. Ace reads it the second it arrives — no one has to open it first.</p></div></div>
+      <div class="step"><div class="step-n">2</div><div class="step-b"><h4>Screened in seconds</h4><p>Eligibility, diagnosis coverage, documentation, and authorization — each checked and scored <b>RED / YELLOW / GREEN</b>.</p></div></div>
+      <div class="step"><div class="step-n">3</div><div class="step-b"><h4>Ranked and routed</h4><p>Your coordinator opens a ready worklist: green = admit now, yellow = one thing to verify, red = don't send a wasted visit.</p></div></div>
+      <div class="step"><div class="step-n">4</div><div class="step-b"><h4>Drafts the next step</h4><p>Ace writes the eligibility summary, the missing-document request, the acceptance note — your staff review, approve, and send.</p></div></div>
+      <div class="step"><div class="step-n">5</div><div class="step-b"><h4>Nothing falls through</h4><p>Every referral is tracked to a decision with a full audit trail. No referral forgotten in an inbox, ever.</p></div></div>
+    </div>
+  </section>
+
+  <!-- benefits -->
+  <section class="benefits">
+    <p class="eyebrow" style="color:var(--teal)">Why it matters for your agency</p>
+    <h2>Built around the numbers you actually run on.</h2>
+
+    <div class="bcard reveal"><div class="bh"><div class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m5 12 5 5 9-11"/></svg></div><h4>Say yes faster</h4></div><p>You respond to referrals in minutes, not hours — so you <span class="win">win the admission</span> instead of losing it to the agency down the street.</p></div>
+    <div class="bcard reveal"><div class="bh"><div class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><h4>Clinical hours back</h4></div><p>Your nurses <span class="win">stop screening PDFs</span> and get back to patients. Ace does the first read on every single referral.</p></div>
+    <div class="bcard reveal"><div class="bh"><div class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></div><h4>Clean admissions, fewer denials</h4></div><p>Eligibility, face-to-face, and authorization are verified up front — so <span class="win">the claim holds</span> instead of getting clawed back.</p></div>
+    <div class="bcard reveal"><div class="bh"><div class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><h4>A ranked worklist, not a pile</h4></div><p>Your coordinator <span class="win">works the greens first</span> and never wonders what's waiting in the inbox.</p></div>
+    <div class="bcard reveal"><div class="bh"><div class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h4>One coordinator's workload, covered</h4></div><p>Ace handles the reading and sorting a full-time intake hire would do — <span class="win">for a fraction of the cost</span>, and it never calls in sick.</p></div>
+  </section>
+
+  <!-- trust -->
+  <section class="trust reveal">
+    <h3>Compliance-first, by design</h3>
+    <div class="trust-grid">
+      <div class="tpill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg> HIPAA-first</div>
+      <div class="tpill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Human-approved</div>
+      <div class="tpill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg> Full audit trail</div>
+      <div class="tpill"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg> AB 489 disclosed</div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>See Ace screen a real referral in 15 minutes.</h2>
+    <p>Send us one de-identified referral and watch Ace read, score, and rank it live — exactly what your intake desk would do.</p>
+    <a class="btn" href="mailto:bear@simersonai.com?subject=Ace%20demo%20for%20our%20intake">Book a demo</a>
+    <div class="contact"><b>Bear Simerson</b> · Simerson Ai<br/>Ace — a Simerson Ai platform</div>
+  </section>
+
+  <footer>
+    <span class="fword">ace</span> · AI referral intake for home health &amp; SNF admissions<br/>
+    A Simerson Ai platform.<br/>
+    Demonstration uses sample data only.
+  </footer>
+
+</div>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    function showAll(){els.forEach(function(e){e.classList.add('in')});}
+    if(!('IntersectionObserver' in window)){showAll();return;}
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if(en.isIntersecting){en.target.classList.add('in'); io.unobserve(en.target);} });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e)});
+    setTimeout(showAll, 1600);
+  })();
+</script>
+</body>
+</html>
