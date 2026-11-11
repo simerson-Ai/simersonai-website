@@ -117,6 +117,8 @@
   .cta .sign b{color:#fff;font-weight:700}
   .cta .sign .mono{display:block;margin-top:5px;font-size:12px;color:#9a9a9a;letter-spacing:.02em}
 
+  .site-foot{text-align:center;padding:32px 28px 42px;background:var(--paper);border-top:1px solid var(--line)}
+  .foot-tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--gray);margin-top:8px}
   a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
   .js-reveal .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease}
   .js-reveal .reveal.in{opacity:1;transform:none}
@@ -126,14 +128,8 @@
 <body>
 <div class="shell">
 
-  <!-- masthead: SIMERSON Ai -->
-  <div class="mast">
-    <img class="simerson-logo" src="https://simersonai.com/assets/simerson-logo-color.svg" alt="Simerson Ai" />
-    <div class="sub">AI Automation &amp; Design</div>
-  </div>
-
-  <!-- hero -->
-  <section class="hero">
+  <!-- hero (Ace — at the top) -->
+  <section class="hero" style="padding-top:38px">
     <p class="eyebrow kicker">New · Digital employee</p>
     <svg class="ace-logo" viewBox="0 0 100 100" fill="none" aria-label="Ace">
       <rect x="24" y="9" width="52" height="82" rx="9" fill="#FFFFFF" stroke="#0A0A0A" stroke-width="4.5"/>
@@ -167,8 +163,8 @@
           <p>We can accept this patient. Bed available today.</p>
         </div>
         <div class="acts">
-          <a class="go" href="mailto:bsimerson@simersonai.com?subject=Ace%20pilot%20for%20our%20intake">Approve and send</a>
-          <a class="edit" href="mailto:bsimerson@simersonai.com?subject=Ace%20pilot%20for%20our%20intake">Edit</a>
+          <a class="go" href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener">Approve and send</a>
+          <a class="edit" href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener">Edit</a>
         </div>
       </div>
     </div>
@@ -226,16 +222,27 @@
     <p class="eyebrow k">For more information or a pilot</p>
     <h2>Try Ace free for 2 weeks.</h2>
     <p class="nolock">No lock-ins.</p>
-    <a class="btn" href="mailto:bsimerson@simersonai.com?subject=Ace%20free%20pilot">Start a free pilot</a>
+    <a class="btn" href="https://calendly.com/simersonai/15min" target="_blank" rel="noopener">Book your free pilot</a>
     <div class="sign">
       <b>Bear Simerson</b> · Business Development
       <span class="mono">(760) 465-7500 · bsimerson@simersonai.com</span>
     </div>
   </section>
 
+  <!-- Simerson Ai sign-off at the very bottom -->
+  <footer class="site-foot">
+    <img class="simerson-logo" src="https://simersonai.com/assets/simerson-logo-color.svg" alt="Simerson Ai" />
+    <div class="foot-tag">AI Automation &amp; Design</div>
+  </footer>
+
 </div>
 
 <script>
+  /* Count how often the flyer is opened (fire-and-forget; never affects the page). */
+  try{
+    if(navigator.sendBeacon){navigator.sendBeacon('/.netlify/functions/flyer-metrics');}
+    else{fetch('/.netlify/functions/flyer-metrics',{method:'POST',keepalive:true}).catch(function(){});}
+  }catch(e){}
   (function(){
     var els=document.querySelectorAll('.reveal');
     function showAll(){els.forEach(function(e){e.classList.add('in')})}
