@@ -54,9 +54,8 @@
     <h1>Start your free pilot.</h1>
     <p class="lead">A few details so we can set Ace up for your agency — then pick a time that works.</p>
 
-    <form name="ace-pilot" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="aceForm">
-      <input type="hidden" name="form-name" value="ace-pilot" />
-      <p class="hp"><label>Don't fill this out: <input name="bot-field" /></label></p>
+    <form id="aceForm" novalidate>
+      <p class="hp"><label>Don't fill this out: <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
 
       <label>Your name <span class="req">*</span></label>
       <input name="name" required autocomplete="name" />
@@ -97,14 +96,27 @@
 <script>
   var CALENDLY = "https://calendly.com/simersonai/15min";
   var form = document.getElementById('aceForm');
+  function val(n){ var el = form.elements[n]; return el ? String(el.value || '').trim() : ''; }
   form.addEventListener('submit', function(e){
     e.preventDefault();
+    if (val('bot-field')) return;                 // honeypot: silently drop bots
+    if (!form.checkValidity()) { form.reportValidity(); return; }
     document.getElementById('aceSubmit').textContent = 'One moment…';
-    var body = new URLSearchParams(new FormData(form)).toString();
-    // Capture the lead in Netlify Forms, then send them to Calendly to book.
+    var payload = {
+      name: val('name'),
+      company: val('agency'),
+      email: val('email'),
+      phone: val('phone'),
+      brief: 'Ace pilot request — referrals/week: ' + (val('weekly_referrals') || 'n/a') +
+             '; current intake/EHR: ' + (val('ehr') || 'n/a'),
+      source: 'ace-flyer'
+    };
+    // Capture the lead in the existing pipeline (Google Sheet + notification),
+    // then send them to Calendly to book. Always proceeds, even on a hiccup.
     var go = function(){ window.location.href = CALENDLY; };
-    fetch('/', { method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body })
-      .then(go).catch(go);
+    fetch('/.netlify/functions/log-lead', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    }).then(go).catch(go);
   });
 </script>
 </body>
